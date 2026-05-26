@@ -1,0 +1,49 @@
+[project]
+name = "ovenmind"
+version = "0.1.0"
+description = "Agentic intelligence layer fusing predictive maintenance and food computer vision for industrial bakeries."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    # web
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.34",
+    "sse-starlette>=2.1",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.5",
+    "python-dotenv>=1.0",
+    # agents
+    "langgraph>=1.0",
+    "langchain>=0.3",
+    "langchain-anthropic>=0.3",
+    "langchain-community>=0.3",
+    "langsmith>=0.1",
+    "anthropic>=0.40",
+    # rag
+    "chromadb>=0.5",
+    "rank-bm25>=0.2",
+    "openai>=1.50",        # embeddings (text-embedding-3-small)
+    "voyageai>=0.3",       # alt embeddings (voyage-3)
+    # data
+    "numpy>=2.0",
+    "pandas>=2.2",
+    # reports
+    "reportlab>=4.2",
+    "qrcode>=8.0",
+    # cv (heavy — install only on the CV/Data machine if needed)
+    "ultralytics>=8.3",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.7",
+    "pytest>=8.3",
+    "ipython>=8.27",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
