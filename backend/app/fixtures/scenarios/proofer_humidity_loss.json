@@ -1,0 +1,7341 @@
+{
+  "meta": {
+    "id": "proofer_humidity_loss",
+    "equipment_id": "P-12",
+    "equipment_name": "Proofer P-12",
+    "line": "Line 4",
+    "title": "Proofer \u2014 humidity sensor drift",
+    "severity": "high",
+    "product": "Rolls",
+    "image": "/images/rolls_underproofed.svg",
+    "fire_at_t": 40.0,
+    "hz": 2.0,
+    "duration_s": 60.0
+  },
+  "channels": [
+    {
+      "key": "humidity",
+      "label": "Chamber humidity",
+      "unit": "%RH",
+      "baseline": 82.0,
+      "noise": 0.5,
+      "drift_to": 63.0
+    },
+    {
+      "key": "chamber_temp",
+      "label": "Chamber temp",
+      "unit": "\u00b0C",
+      "baseline": 38.0,
+      "noise": 0.3,
+      "drift_to": 41.5
+    },
+    {
+      "key": "steam_pressure",
+      "label": "Steam pressure",
+      "unit": "bar",
+      "baseline": 1.4,
+      "noise": 0.05,
+      "drift_to": 0.9
+    }
+  ],
+  "sensors": {
+    "frames": [
+      {
+        "t": 0.0,
+        "values": {
+          "humidity": 81.783,
+          "chamber_temp": 38.801,
+          "steam_pressure": 1.434
+        }
+      },
+      {
+        "t": 0.5,
+        "values": {
+          "humidity": 81.48,
+          "chamber_temp": 38.241,
+          "steam_pressure": 1.405
+        }
+      },
+      {
+        "t": 1.0,
+        "values": {
+          "humidity": 81.401,
+          "chamber_temp": 37.707,
+          "steam_pressure": 1.41
+        }
+      },
+      {
+        "t": 1.5,
+        "values": {
+          "humidity": 81.905,
+          "chamber_temp": 37.647,
+          "steam_pressure": 1.434
+        }
+      },
+      {
+        "t": 2.0,
+        "values": {
+          "humidity": 82.629,
+          "chamber_temp": 37.98,
+          "steam_pressure": 1.389
+        }
+      },
+      {
+        "t": 2.5,
+        "values": {
+          "humidity": 81.727,
+          "chamber_temp": 37.687,
+          "steam_pressure": 1.457
+        }
+      },
+      {
+        "t": 3.0,
+        "values": {
+          "humidity": 81.917,
+          "chamber_temp": 37.803,
+          "steam_pressure": 1.458
+        }
+      },
+      {
+        "t": 3.5,
+        "values": {
+          "humidity": 82.217,
+          "chamber_temp": 38.218,
+          "steam_pressure": 1.437
+        }
+      },
+      {
+        "t": 4.0,
+        "values": {
+          "humidity": 82.446,
+          "chamber_temp": 38.183,
+          "steam_pressure": 1.382
+        }
+      },
+      {
+        "t": 4.5,
+        "values": {
+          "humidity": 82.419,
+          "chamber_temp": 37.556,
+          "steam_pressure": 1.42
+        }
+      },
+      {
+        "t": 5.0,
+        "values": {
+          "humidity": 83.017,
+          "chamber_temp": 38.16,
+          "steam_pressure": 1.323
+        }
+      },
+      {
+        "t": 5.5,
+        "values": {
+          "humidity": 81.882,
+          "chamber_temp": 37.389,
+          "steam_pressure": 1.472
+        }
+      },
+      {
+        "t": 6.0,
+        "values": {
+          "humidity": 82.659,
+          "chamber_temp": 38.235,
+          "steam_pressure": 1.379
+        }
+      },
+      {
+        "t": 6.5,
+        "values": {
+          "humidity": 82.116,
+          "chamber_temp": 37.866,
+          "steam_pressure": 1.491
+        }
+      },
+      {
+        "t": 7.0,
+        "values": {
+          "humidity": 83.125,
+          "chamber_temp": 37.275,
+          "steam_pressure": 1.426
+        }
+      },
+      {
+        "t": 7.5,
+        "values": {
+          "humidity": 82.004,
+          "chamber_temp": 38.296,
+          "steam_pressure": 1.421
+        }
+      },
+      {
+        "t": 8.0,
+        "values": {
+          "humidity": 81.958,
+          "chamber_temp": 38.033,
+          "steam_pressure": 1.444
+        }
+      },
+      {
+        "t": 8.5,
+        "values": {
+          "humidity": 82.249,
+          "chamber_temp": 37.931,
+          "steam_pressure": 1.406
+        }
+      },
+      {
+        "t": 9.0,
+        "values": {
+          "humidity": 81.798,
+          "chamber_temp": 38.363,
+          "steam_pressure": 1.424
+        }
+      },
+      {
+        "t": 9.5,
+        "values": {
+          "humidity": 81.949,
+          "chamber_temp": 38.428,
+          "steam_pressure": 1.453
+        }
+      },
+      {
+        "t": 10.0,
+        "values": {
+          "humidity": 82.962,
+          "chamber_temp": 38.301,
+          "steam_pressure": 1.398
+        }
+      },
+      {
+        "t": 10.5,
+        "values": {
+          "humidity": 82.145,
+          "chamber_temp": 37.955,
+          "steam_pressure": 1.475
+        }
+      },
+      {
+        "t": 11.0,
+        "values": {
+          "humidity": 82.183,
+          "chamber_temp": 37.99,
+          "steam_pressure": 1.335
+        }
+      },
+      {
+        "t": 11.5,
+        "values": {
+          "humidity": 82.038,
+          "chamber_temp": 37.951,
+          "steam_pressure": 1.383
+        }
+      },
+      {
+        "t": 12.0,
+        "values": {
+          "humidity": 81.962,
+          "chamber_temp": 37.805,
+          "steam_pressure": 1.365
+        }
+      },
+      {
+        "t": 12.5,
+        "values": {
+          "humidity": 82.28,
+          "chamber_temp": 38.197,
+          "steam_pressure": 1.366
+        }
+      },
+      {
+        "t": 13.0,
+        "values": {
+          "humidity": 82.19,
+          "chamber_temp": 37.666,
+          "steam_pressure": 1.461
+        }
+      },
+      {
+        "t": 13.5,
+        "values": {
+          "humidity": 82.055,
+          "chamber_temp": 38.109,
+          "steam_pressure": 1.347
+        }
+      },
+      {
+        "t": 14.0,
+        "values": {
+          "humidity": 81.852,
+          "chamber_temp": 37.594,
+          "steam_pressure": 1.443
+        }
+      },
+      {
+        "t": 14.5,
+        "values": {
+          "humidity": 82.092,
+          "chamber_temp": 37.312,
+          "steam_pressure": 1.303
+        }
+      },
+      {
+        "t": 15.0,
+        "values": {
+          "humidity": 82.089,
+          "chamber_temp": 38.33,
+          "steam_pressure": 1.412
+        }
+      },
+      {
+        "t": 15.5,
+        "values": {
+          "humidity": 82.291,
+          "chamber_temp": 37.91,
+          "steam_pressure": 1.44
+        }
+      },
+      {
+        "t": 16.0,
+        "values": {
+          "humidity": 81.555,
+          "chamber_temp": 38.293,
+          "steam_pressure": 1.31
+        }
+      },
+      {
+        "t": 16.5,
+        "values": {
+          "humidity": 81.693,
+          "chamber_temp": 38.303,
+          "steam_pressure": 1.392
+        }
+      },
+      {
+        "t": 17.0,
+        "values": {
+          "humidity": 82.401,
+          "chamber_temp": 38.55,
+          "steam_pressure": 1.32
+        }
+      },
+      {
+        "t": 17.5,
+        "values": {
+          "humidity": 81.17,
+          "chamber_temp": 37.53,
+          "steam_pressure": 1.472
+        }
+      },
+      {
+        "t": 18.0,
+        "values": {
+          "humidity": 82.259,
+          "chamber_temp": 37.641,
+          "steam_pressure": 1.505
+        }
+      },
+      {
+        "t": 18.5,
+        "values": {
+          "humidity": 81.44,
+          "chamber_temp": 38.04,
+          "steam_pressure": 1.386
+        }
+      },
+      {
+        "t": 19.0,
+        "values": {
+          "humidity": 82.714,
+          "chamber_temp": 37.895,
+          "steam_pressure": 1.373
+        }
+      },
+      {
+        "t": 19.5,
+        "values": {
+          "humidity": 82.292,
+          "chamber_temp": 37.944,
+          "steam_pressure": 1.38
+        }
+      },
+      {
+        "t": 20.0,
+        "values": {
+          "humidity": 81.086,
+          "chamber_temp": 38.222,
+          "steam_pressure": 1.326
+        }
+      },
+      {
+        "t": 20.5,
+        "values": {
+          "humidity": 81.269,
+          "chamber_temp": 37.963,
+          "steam_pressure": 1.379
+        }
+      },
+      {
+        "t": 21.0,
+        "values": {
+          "humidity": 82.432,
+          "chamber_temp": 38.168,
+          "steam_pressure": 1.317
+        }
+      },
+      {
+        "t": 21.5,
+        "values": {
+          "humidity": 81.379,
+          "chamber_temp": 38.305,
+          "steam_pressure": 1.419
+        }
+      },
+      {
+        "t": 22.0,
+        "values": {
+          "humidity": 81.972,
+          "chamber_temp": 37.84,
+          "steam_pressure": 1.405
+        }
+      },
+      {
+        "t": 22.5,
+        "values": {
+          "humidity": 82.808,
+          "chamber_temp": 37.565,
+          "steam_pressure": 1.361
+        }
+      },
+      {
+        "t": 23.0,
+        "values": {
+          "humidity": 81.27,
+          "chamber_temp": 38.354,
+          "steam_pressure": 1.452
+        }
+      },
+      {
+        "t": 23.5,
+        "values": {
+          "humidity": 81.047,
+          "chamber_temp": 37.637,
+          "steam_pressure": 1.41
+        }
+      },
+      {
+        "t": 24.0,
+        "values": {
+          "humidity": 81.38,
+          "chamber_temp": 37.558,
+          "steam_pressure": 1.464
+        }
+      },
+      {
+        "t": 24.5,
+        "values": {
+          "humidity": 81.623,
+          "chamber_temp": 37.76,
+          "steam_pressure": 1.409
+        }
+      },
+      {
+        "t": 25.0,
+        "values": {
+          "humidity": 81.989,
+          "chamber_temp": 38.028,
+          "steam_pressure": 1.439
+        }
+      },
+      {
+        "t": 25.5,
+        "values": {
+          "humidity": 82.071,
+          "chamber_temp": 38.349,
+          "steam_pressure": 1.515
+        }
+      },
+      {
+        "t": 26.0,
+        "values": {
+          "humidity": 80.249,
+          "chamber_temp": 38.387,
+          "steam_pressure": 1.449
+        }
+      },
+      {
+        "t": 26.5,
+        "values": {
+          "humidity": 81.127,
+          "chamber_temp": 38.097,
+          "steam_pressure": 1.37
+        }
+      },
+      {
+        "t": 27.0,
+        "values": {
+          "humidity": 80.205,
+          "chamber_temp": 38.595,
+          "steam_pressure": 1.349
+        }
+      },
+      {
+        "t": 27.5,
+        "values": {
+          "humidity": 80.361,
+          "chamber_temp": 38.601,
+          "steam_pressure": 1.302
+        }
+      },
+      {
+        "t": 28.0,
+        "values": {
+          "humidity": 79.713,
+          "chamber_temp": 38.661,
+          "steam_pressure": 1.294
+        }
+      },
+      {
+        "t": 28.5,
+        "values": {
+          "humidity": 78.576,
+          "chamber_temp": 38.574,
+          "steam_pressure": 1.408
+        }
+      },
+      {
+        "t": 29.0,
+        "values": {
+          "humidity": 78.287,
+          "chamber_temp": 38.707,
+          "steam_pressure": 1.289
+        }
+      },
+      {
+        "t": 29.5,
+        "values": {
+          "humidity": 78.616,
+          "chamber_temp": 39.027,
+          "steam_pressure": 1.379
+        }
+      },
+      {
+        "t": 30.0,
+        "values": {
+          "humidity": 77.641,
+          "chamber_temp": 39.022,
+          "steam_pressure": 1.227
+        }
+      },
+      {
+        "t": 30.5,
+        "values": {
+          "humidity": 76.301,
+          "chamber_temp": 38.719,
+          "steam_pressure": 1.218
+        }
+      },
+      {
+        "t": 31.0,
+        "values": {
+          "humidity": 75.649,
+          "chamber_temp": 38.891,
+          "steam_pressure": 1.343
+        }
+      },
+      {
+        "t": 31.5,
+        "values": {
+          "humidity": 75.569,
+          "chamber_temp": 39.167,
+          "steam_pressure": 1.25
+        }
+      },
+      {
+        "t": 32.0,
+        "values": {
+          "humidity": 74.7,
+          "chamber_temp": 39.613,
+          "steam_pressure": 1.158
+        }
+      },
+      {
+        "t": 32.5,
+        "values": {
+          "humidity": 75.209,
+          "chamber_temp": 39.736,
+          "steam_pressure": 1.338
+        }
+      },
+      {
+        "t": 33.0,
+        "values": {
+          "humidity": 74.544,
+          "chamber_temp": 39.558,
+          "steam_pressure": 1.235
+        }
+      },
+      {
+        "t": 33.5,
+        "values": {
+          "humidity": 73.576,
+          "chamber_temp": 39.541,
+          "steam_pressure": 1.21
+        }
+      },
+      {
+        "t": 34.0,
+        "values": {
+          "humidity": 72.985,
+          "chamber_temp": 39.574,
+          "steam_pressure": 1.216
+        }
+      },
+      {
+        "t": 34.5,
+        "values": {
+          "humidity": 73.127,
+          "chamber_temp": 39.257,
+          "steam_pressure": 1.131
+        }
+      },
+      {
+        "t": 35.0,
+        "values": {
+          "humidity": 72.916,
+          "chamber_temp": 40.063,
+          "steam_pressure": 1.18
+        }
+      },
+      {
+        "t": 35.5,
+        "values": {
+          "humidity": 71.697,
+          "chamber_temp": 39.882,
+          "steam_pressure": 1.168
+        }
+      },
+      {
+        "t": 36.0,
+        "values": {
+          "humidity": 71.259,
+          "chamber_temp": 39.52,
+          "steam_pressure": 1.197
+        }
+      },
+      {
+        "t": 36.5,
+        "values": {
+          "humidity": 71.174,
+          "chamber_temp": 39.584,
+          "steam_pressure": 1.117
+        }
+      },
+      {
+        "t": 37.0,
+        "values": {
+          "humidity": 70.303,
+          "chamber_temp": 40.06,
+          "steam_pressure": 1.071
+        }
+      },
+      {
+        "t": 37.5,
+        "values": {
+          "humidity": 70.683,
+          "chamber_temp": 40.067,
+          "steam_pressure": 1.064
+        }
+      },
+      {
+        "t": 38.0,
+        "values": {
+          "humidity": 69.726,
+          "chamber_temp": 39.956,
+          "steam_pressure": 1.065
+        }
+      },
+      {
+        "t": 38.5,
+        "values": {
+          "humidity": 69.546,
+          "chamber_temp": 39.934,
+          "steam_pressure": 0.992
+        }
+      },
+      {
+        "t": 39.0,
+        "values": {
+          "humidity": 69.002,
+          "chamber_temp": 40.173,
+          "steam_pressure": 1.06
+        }
+      },
+      {
+        "t": 39.5,
+        "values": {
+          "humidity": 69.187,
+          "chamber_temp": 40.583,
+          "steam_pressure": 1.028
+        }
+      },
+      {
+        "t": 40.0,
+        "values": {
+          "humidity": 67.396,
+          "chamber_temp": 40.361,
+          "steam_pressure": 1.02
+        }
+      },
+      {
+        "t": 40.5,
+        "values": {
+          "humidity": 67.605,
+          "chamber_temp": 40.69,
+          "steam_pressure": 1.033
+        }
+      },
+      {
+        "t": 41.0,
+        "values": {
+          "humidity": 67.294,
+          "chamber_temp": 40.689,
+          "steam_pressure": 0.913
+        }
+      },
+      {
+        "t": 41.5,
+        "values": {
+          "humidity": 67.127,
+          "chamber_temp": 40.37,
+          "steam_pressure": 0.942
+        }
+      },
+      {
+        "t": 42.0,
+        "values": {
+          "humidity": 65.297,
+          "chamber_temp": 41.285,
+          "steam_pressure": 0.928
+        }
+      },
+      {
+        "t": 42.5,
+        "values": {
+          "humidity": 65.978,
+          "chamber_temp": 40.981,
+          "steam_pressure": 0.96
+        }
+      },
+      {
+        "t": 43.0,
+        "values": {
+          "humidity": 65.02,
+          "chamber_temp": 41.112,
+          "steam_pressure": 0.911
+        }
+      },
+      {
+        "t": 43.5,
+        "values": {
+          "humidity": 63.88,
+          "chamber_temp": 40.982,
+          "steam_pressure": 0.977
+        }
+      },
+      {
+        "t": 44.0,
+        "values": {
+          "humidity": 63.489,
+          "chamber_temp": 41.591,
+          "steam_pressure": 1.005
+        }
+      },
+      {
+        "t": 44.5,
+        "values": {
+          "humidity": 64.035,
+          "chamber_temp": 41.849,
+          "steam_pressure": 0.941
+        }
+      },
+      {
+        "t": 45.0,
+        "values": {
+          "humidity": 63.22,
+          "chamber_temp": 41.167,
+          "steam_pressure": 0.952
+        }
+      },
+      {
+        "t": 45.5,
+        "values": {
+          "humidity": 63.038,
+          "chamber_temp": 41.584,
+          "steam_pressure": 0.922
+        }
+      },
+      {
+        "t": 46.0,
+        "values": {
+          "humidity": 62.651,
+          "chamber_temp": 41.545,
+          "steam_pressure": 0.931
+        }
+      },
+      {
+        "t": 46.5,
+        "values": {
+          "humidity": 62.879,
+          "chamber_temp": 41.881,
+          "steam_pressure": 0.846
+        }
+      },
+      {
+        "t": 47.0,
+        "values": {
+          "humidity": 63.136,
+          "chamber_temp": 41.268,
+          "steam_pressure": 0.889
+        }
+      },
+      {
+        "t": 47.5,
+        "values": {
+          "humidity": 63.506,
+          "chamber_temp": 41.545,
+          "steam_pressure": 0.976
+        }
+      },
+      {
+        "t": 48.0,
+        "values": {
+          "humidity": 62.077,
+          "chamber_temp": 41.659,
+          "steam_pressure": 0.959
+        }
+      },
+      {
+        "t": 48.5,
+        "values": {
+          "humidity": 62.119,
+          "chamber_temp": 41.596,
+          "steam_pressure": 0.933
+        }
+      },
+      {
+        "t": 49.0,
+        "values": {
+          "humidity": 62.904,
+          "chamber_temp": 40.902,
+          "steam_pressure": 0.906
+        }
+      },
+      {
+        "t": 49.5,
+        "values": {
+          "humidity": 62.537,
+          "chamber_temp": 41.423,
+          "steam_pressure": 0.846
+        }
+      },
+      {
+        "t": 50.0,
+        "values": {
+          "humidity": 63.447,
+          "chamber_temp": 41.278,
+          "steam_pressure": 0.877
+        }
+      },
+      {
+        "t": 50.5,
+        "values": {
+          "humidity": 62.9,
+          "chamber_temp": 41.48,
+          "steam_pressure": 0.807
+        }
+      },
+      {
+        "t": 51.0,
+        "values": {
+          "humidity": 63.793,
+          "chamber_temp": 41.196,
+          "steam_pressure": 0.947
+        }
+      },
+      {
+        "t": 51.5,
+        "values": {
+          "humidity": 62.309,
+          "chamber_temp": 41.097,
+          "steam_pressure": 0.95
+        }
+      },
+      {
+        "t": 52.0,
+        "values": {
+          "humidity": 62.249,
+          "chamber_temp": 41.235,
+          "steam_pressure": 0.93
+        }
+      },
+      {
+        "t": 52.5,
+        "values": {
+          "humidity": 63.828,
+          "chamber_temp": 41.401,
+          "steam_pressure": 0.812
+        }
+      },
+      {
+        "t": 53.0,
+        "values": {
+          "humidity": 63.08,
+          "chamber_temp": 41.177,
+          "steam_pressure": 0.925
+        }
+      },
+      {
+        "t": 53.5,
+        "values": {
+          "humidity": 63.043,
+          "chamber_temp": 42.085,
+          "steam_pressure": 0.866
+        }
+      },
+      {
+        "t": 54.0,
+        "values": {
+          "humidity": 62.658,
+          "chamber_temp": 40.938,
+          "steam_pressure": 0.913
+        }
+      },
+      {
+        "t": 54.5,
+        "values": {
+          "humidity": 62.498,
+          "chamber_temp": 41.711,
+          "steam_pressure": 0.919
+        }
+      },
+      {
+        "t": 55.0,
+        "values": {
+          "humidity": 62.765,
+          "chamber_temp": 41.189,
+          "steam_pressure": 0.86
+        }
+      },
+      {
+        "t": 55.5,
+        "values": {
+          "humidity": 63.154,
+          "chamber_temp": 41.25,
+          "steam_pressure": 0.886
+        }
+      },
+      {
+        "t": 56.0,
+        "values": {
+          "humidity": 62.745,
+          "chamber_temp": 40.81,
+          "steam_pressure": 0.81
+        }
+      },
+      {
+        "t": 56.5,
+        "values": {
+          "humidity": 63.423,
+          "chamber_temp": 41.508,
+          "steam_pressure": 1.021
+        }
+      },
+      {
+        "t": 57.0,
+        "values": {
+          "humidity": 62.749,
+          "chamber_temp": 41.184,
+          "steam_pressure": 0.899
+        }
+      },
+      {
+        "t": 57.5,
+        "values": {
+          "humidity": 63.782,
+          "chamber_temp": 41.679,
+          "steam_pressure": 0.928
+        }
+      },
+      {
+        "t": 58.0,
+        "values": {
+          "humidity": 63.192,
+          "chamber_temp": 41.503,
+          "steam_pressure": 0.895
+        }
+      },
+      {
+        "t": 58.5,
+        "values": {
+          "humidity": 63.255,
+          "chamber_temp": 41.408,
+          "steam_pressure": 0.876
+        }
+      },
+      {
+        "t": 59.0,
+        "values": {
+          "humidity": 63.851,
+          "chamber_temp": 41.823,
+          "steam_pressure": 0.892
+        }
+      },
+      {
+        "t": 59.5,
+        "values": {
+          "humidity": 62.971,
+          "chamber_temp": 41.503,
+          "steam_pressure": 0.881
+        }
+      }
+    ]
+  },
+  "cv": {
+    "image": "/images/rolls_underproofed.svg",
+    "defect_label": "under_proofed",
+    "baseline_rate": 0.4,
+    "frames": [
+      {
+        "t": 0.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.931,
+            "bbox": [
+              0.08,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.966,
+            "bbox": [
+              0.38,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.886,
+            "bbox": [
+              0.68,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 0.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.959,
+            "bbox": [
+              0.085,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.938,
+            "bbox": [
+              0.385,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.951,
+            "bbox": [
+              0.685,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.939,
+            "bbox": [
+              0.09,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.926,
+            "bbox": [
+              0.39,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.963,
+            "bbox": [
+              0.69,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.947,
+            "bbox": [
+              0.095,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.895,
+            "bbox": [
+              0.395,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.883,
+            "bbox": [
+              0.695,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.897,
+            "bbox": [
+              0.1,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.899,
+            "bbox": [
+              0.4,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.925,
+            "bbox": [
+              0.7,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.959,
+            "bbox": [
+              0.105,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.888,
+            "bbox": [
+              0.405,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.947,
+            "bbox": [
+              0.705,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.939,
+            "bbox": [
+              0.11,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.886,
+            "bbox": [
+              0.41,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.968,
+            "bbox": [
+              0.71,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.943,
+            "bbox": [
+              0.115,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.943,
+            "bbox": [
+              0.415,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.945,
+            "bbox": [
+              0.715,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.924,
+            "bbox": [
+              0.12,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.909,
+            "bbox": [
+              0.42,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.915,
+            "bbox": [
+              0.72,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.931,
+            "bbox": [
+              0.125,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.902,
+            "bbox": [
+              0.425,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.919,
+            "bbox": [
+              0.725,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.918,
+            "bbox": [
+              0.13,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.923,
+            "bbox": [
+              0.43,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.897,
+            "bbox": [
+              0.73,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.919,
+            "bbox": [
+              0.135,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.904,
+            "bbox": [
+              0.435,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.895,
+            "bbox": [
+              0.735,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.946,
+            "bbox": [
+              0.14,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.916,
+            "bbox": [
+              0.44,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.912,
+            "bbox": [
+              0.74,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.958,
+            "bbox": [
+              0.145,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.918,
+            "bbox": [
+              0.445,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.907,
+            "bbox": [
+              0.745,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.969,
+            "bbox": [
+              0.15,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.937,
+            "bbox": [
+              0.45,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.939,
+            "bbox": [
+              0.75,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.918,
+            "bbox": [
+              0.155,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.902,
+            "bbox": [
+              0.455,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.967,
+            "bbox": [
+              0.755,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.894,
+            "bbox": [
+              0.16,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.957,
+            "bbox": [
+              0.46,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.911,
+            "bbox": [
+              0.76,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.939,
+            "bbox": [
+              0.165,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.959,
+            "bbox": [
+              0.465,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.94,
+            "bbox": [
+              0.765,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.891,
+            "bbox": [
+              0.17,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.933,
+            "bbox": [
+              0.47,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.937,
+            "bbox": [
+              0.77,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.964,
+            "bbox": [
+              0.175,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.945,
+            "bbox": [
+              0.475,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.97,
+            "bbox": [
+              0.775,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.949,
+            "bbox": [
+              0.18,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.948,
+            "bbox": [
+              0.48,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.96,
+            "bbox": [
+              0.78,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.895,
+            "bbox": [
+              0.185,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.931,
+            "bbox": [
+              0.485,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.905,
+            "bbox": [
+              0.785,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 11.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.939,
+            "bbox": [
+              0.19,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.903,
+            "bbox": [
+              0.49,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.964,
+            "bbox": [
+              0.79,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 11.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.916,
+            "bbox": [
+              0.195,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.961,
+            "bbox": [
+              0.495,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.937,
+            "bbox": [
+              0.795,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.949,
+            "bbox": [
+              0.2,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.912,
+            "bbox": [
+              0.5,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.885,
+            "bbox": [
+              0.8,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.966,
+            "bbox": [
+              0.205,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.907,
+            "bbox": [
+              0.505,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.881,
+            "bbox": [
+              0.805,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.948,
+            "bbox": [
+              0.21,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.958,
+            "bbox": [
+              0.51,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.933,
+            "bbox": [
+              0.81,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.96,
+            "bbox": [
+              0.215,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.953,
+            "bbox": [
+              0.515,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.892,
+            "bbox": [
+              0.815,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.913,
+            "bbox": [
+              0.22,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.933,
+            "bbox": [
+              0.52,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.909,
+            "bbox": [
+              0.0,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.924,
+            "bbox": [
+              0.225,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.956,
+            "bbox": [
+              0.525,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.914,
+            "bbox": [
+              0.005,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.942,
+            "bbox": [
+              0.23,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.919,
+            "bbox": [
+              0.53,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.901,
+            "bbox": [
+              0.01,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.928,
+            "bbox": [
+              0.235,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.946,
+            "bbox": [
+              0.535,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.932,
+            "bbox": [
+              0.015,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.924,
+            "bbox": [
+              0.24,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.939,
+            "bbox": [
+              0.54,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.9,
+            "bbox": [
+              0.02,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 16.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.955,
+            "bbox": [
+              0.245,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.926,
+            "bbox": [
+              0.545,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.945,
+            "bbox": [
+              0.025,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 17.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.9,
+            "bbox": [
+              0.25,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.932,
+            "bbox": [
+              0.55,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.913,
+            "bbox": [
+              0.03,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 17.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.952,
+            "bbox": [
+              0.255,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.946,
+            "bbox": [
+              0.555,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.907,
+            "bbox": [
+              0.035,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 18.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.924,
+            "bbox": [
+              0.26,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.893,
+            "bbox": [
+              0.56,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.924,
+            "bbox": [
+              0.04,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 18.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.904,
+            "bbox": [
+              0.265,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.906,
+            "bbox": [
+              0.565,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.886,
+            "bbox": [
+              0.045,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 19.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.884,
+            "bbox": [
+              0.27,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.915,
+            "bbox": [
+              0.57,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.947,
+            "bbox": [
+              0.05,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 19.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.91,
+            "bbox": [
+              0.275,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.885,
+            "bbox": [
+              0.575,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.961,
+            "bbox": [
+              0.055,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 20.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.916,
+            "bbox": [
+              0.28,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.891,
+            "bbox": [
+              0.58,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.948,
+            "bbox": [
+              0.06,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 20.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.922,
+            "bbox": [
+              0.285,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.927,
+            "bbox": [
+              0.585,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.943,
+            "bbox": [
+              0.065,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 21.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.947,
+            "bbox": [
+              0.29,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.911,
+            "bbox": [
+              0.59,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.897,
+            "bbox": [
+              0.07,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 21.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.928,
+            "bbox": [
+              0.295,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.949,
+            "bbox": [
+              0.595,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.941,
+            "bbox": [
+              0.075,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 22.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.891,
+            "bbox": [
+              0.3,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.956,
+            "bbox": [
+              0.6,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.951,
+            "bbox": [
+              0.08,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 22.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.926,
+            "bbox": [
+              0.305,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.925,
+            "bbox": [
+              0.605,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.912,
+            "bbox": [
+              0.085,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 23.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.963,
+            "bbox": [
+              0.31,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.889,
+            "bbox": [
+              0.61,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.881,
+            "bbox": [
+              0.09,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 23.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.944,
+            "bbox": [
+              0.315,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.932,
+            "bbox": [
+              0.615,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.967,
+            "bbox": [
+              0.095,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 24.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.903,
+            "bbox": [
+              0.32,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.932,
+            "bbox": [
+              0.62,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.886,
+            "bbox": [
+              0.1,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 24.5,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.905,
+            "bbox": [
+              0.325,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.946,
+            "bbox": [
+              0.625,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.91,
+            "bbox": [
+              0.105,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 25.0,
+        "defect_rate": 0.4,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.92,
+            "bbox": [
+              0.33,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.942,
+            "bbox": [
+              0.63,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.916,
+            "bbox": [
+              0.11,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 25.5,
+        "defect_rate": 0.53,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.889,
+            "bbox": [
+              0.335,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.891,
+            "bbox": [
+              0.635,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.906,
+            "bbox": [
+              0.115,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 26.0,
+        "defect_rate": 0.67,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.926,
+            "bbox": [
+              0.34,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.929,
+            "bbox": [
+              0.64,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.962,
+            "bbox": [
+              0.12,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 26.5,
+        "defect_rate": 0.8,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.926,
+            "bbox": [
+              0.345,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.913,
+            "bbox": [
+              0.645,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.93,
+            "bbox": [
+              0.125,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 27.0,
+        "defect_rate": 0.93,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.966,
+            "bbox": [
+              0.35,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.925,
+            "bbox": [
+              0.65,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.954,
+            "bbox": [
+              0.13,
+              0.3,
+              0.16,
+              0.34
+            ]
+          }
+        ]
+      },
+      {
+        "t": 27.5,
+        "defect_rate": 1.06,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.934,
+            "bbox": [
+              0.355,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.886,
+            "bbox": [
+              0.655,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.937,
+            "bbox": [
+              0.135,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.567,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 28.0,
+        "defect_rate": 1.19,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.904,
+            "bbox": [
+              0.36,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.88,
+            "bbox": [
+              0.66,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.891,
+            "bbox": [
+              0.14,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.647,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 28.5,
+        "defect_rate": 1.33,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.903,
+            "bbox": [
+              0.365,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.918,
+            "bbox": [
+              0.665,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.929,
+            "bbox": [
+              0.145,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.602,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 29.0,
+        "defect_rate": 1.46,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.92,
+            "bbox": [
+              0.37,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.947,
+            "bbox": [
+              0.67,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.89,
+            "bbox": [
+              0.15,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.63,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 29.5,
+        "defect_rate": 1.59,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.905,
+            "bbox": [
+              0.375,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.927,
+            "bbox": [
+              0.675,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.935,
+            "bbox": [
+              0.155,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.639,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 30.0,
+        "defect_rate": 1.73,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.951,
+            "bbox": [
+              0.08,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.908,
+            "bbox": [
+              0.38,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.918,
+            "bbox": [
+              0.68,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.684,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 30.5,
+        "defect_rate": 1.86,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.942,
+            "bbox": [
+              0.085,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.949,
+            "bbox": [
+              0.385,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.945,
+            "bbox": [
+              0.685,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.652,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 31.0,
+        "defect_rate": 1.99,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.915,
+            "bbox": [
+              0.09,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.906,
+            "bbox": [
+              0.39,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.934,
+            "bbox": [
+              0.69,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.726,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 31.5,
+        "defect_rate": 2.12,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.883,
+            "bbox": [
+              0.095,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.958,
+            "bbox": [
+              0.395,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.933,
+            "bbox": [
+              0.695,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.654,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 32.0,
+        "defect_rate": 2.25,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.947,
+            "bbox": [
+              0.1,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.919,
+            "bbox": [
+              0.4,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.904,
+            "bbox": [
+              0.7,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.675,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 32.5,
+        "defect_rate": 2.39,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.949,
+            "bbox": [
+              0.105,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.939,
+            "bbox": [
+              0.405,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.888,
+            "bbox": [
+              0.705,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.689,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 33.0,
+        "defect_rate": 2.52,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.936,
+            "bbox": [
+              0.11,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.928,
+            "bbox": [
+              0.41,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.916,
+            "bbox": [
+              0.71,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.702,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 33.5,
+        "defect_rate": 2.65,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.902,
+            "bbox": [
+              0.115,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.93,
+            "bbox": [
+              0.415,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.905,
+            "bbox": [
+              0.715,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.716,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 34.0,
+        "defect_rate": 2.78,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.915,
+            "bbox": [
+              0.12,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.88,
+            "bbox": [
+              0.42,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.883,
+            "bbox": [
+              0.72,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.784,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 34.5,
+        "defect_rate": 2.92,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.898,
+            "bbox": [
+              0.125,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.906,
+            "bbox": [
+              0.425,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.91,
+            "bbox": [
+              0.725,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.744,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 35.0,
+        "defect_rate": 3.05,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.897,
+            "bbox": [
+              0.13,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.932,
+            "bbox": [
+              0.43,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.936,
+            "bbox": [
+              0.73,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.8,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.756,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 35.5,
+        "defect_rate": 3.18,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.911,
+            "bbox": [
+              0.135,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.891,
+            "bbox": [
+              0.435,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.93,
+            "bbox": [
+              0.735,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.766,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.767,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 36.0,
+        "defect_rate": 3.31,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.944,
+            "bbox": [
+              0.14,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.924,
+            "bbox": [
+              0.44,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.963,
+            "bbox": [
+              0.74,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.798,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.755,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 36.5,
+        "defect_rate": 3.45,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.889,
+            "bbox": [
+              0.145,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.889,
+            "bbox": [
+              0.445,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.929,
+            "bbox": [
+              0.745,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.77,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.81,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 37.0,
+        "defect_rate": 3.58,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.898,
+            "bbox": [
+              0.15,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.893,
+            "bbox": [
+              0.45,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.955,
+            "bbox": [
+              0.75,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.783,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.822,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 37.5,
+        "defect_rate": 3.71,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.97,
+            "bbox": [
+              0.155,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.916,
+            "bbox": [
+              0.455,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.912,
+            "bbox": [
+              0.755,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.768,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.814,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 38.0,
+        "defect_rate": 3.84,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.937,
+            "bbox": [
+              0.16,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.951,
+            "bbox": [
+              0.46,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.888,
+            "bbox": [
+              0.76,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.794,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.836,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 38.5,
+        "defect_rate": 3.98,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.899,
+            "bbox": [
+              0.165,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.91,
+            "bbox": [
+              0.465,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.9,
+            "bbox": [
+              0.765,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.788,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.844,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 39.0,
+        "defect_rate": 4.11,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.916,
+            "bbox": [
+              0.17,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.914,
+            "bbox": [
+              0.47,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.922,
+            "bbox": [
+              0.77,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.801,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.847,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 39.5,
+        "defect_rate": 4.24,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.929,
+            "bbox": [
+              0.175,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.884,
+            "bbox": [
+              0.475,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.949,
+            "bbox": [
+              0.775,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.801,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.831,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 40.0,
+        "defect_rate": 4.38,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.914,
+            "bbox": [
+              0.18,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.943,
+            "bbox": [
+              0.48,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.912,
+            "bbox": [
+              0.78,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.887,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.828,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 40.5,
+        "defect_rate": 4.51,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.906,
+            "bbox": [
+              0.185,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.907,
+            "bbox": [
+              0.485,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.955,
+            "bbox": [
+              0.785,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.856,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.92,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 41.0,
+        "defect_rate": 4.64,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.954,
+            "bbox": [
+              0.19,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.921,
+            "bbox": [
+              0.49,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.893,
+            "bbox": [
+              0.79,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.889,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.892,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 41.5,
+        "defect_rate": 4.77,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.9,
+            "bbox": [
+              0.195,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.884,
+            "bbox": [
+              0.495,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.882,
+            "bbox": [
+              0.795,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.92,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.864,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 42.0,
+        "defect_rate": 4.91,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.931,
+            "bbox": [
+              0.2,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.927,
+            "bbox": [
+              0.5,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.965,
+            "bbox": [
+              0.8,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.881,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.908,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 42.5,
+        "defect_rate": 5.04,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.888,
+            "bbox": [
+              0.205,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.911,
+            "bbox": [
+              0.505,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.895,
+            "bbox": [
+              0.805,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.864,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.919,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.868,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 43.0,
+        "defect_rate": 5.17,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.953,
+            "bbox": [
+              0.21,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.916,
+            "bbox": [
+              0.51,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.922,
+            "bbox": [
+              0.81,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.922,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.911,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.943,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 43.5,
+        "defect_rate": 5.3,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.963,
+            "bbox": [
+              0.215,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.945,
+            "bbox": [
+              0.515,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.907,
+            "bbox": [
+              0.815,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.912,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.926,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.913,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 44.0,
+        "defect_rate": 5.43,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.885,
+            "bbox": [
+              0.22,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.91,
+            "bbox": [
+              0.52,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.947,
+            "bbox": [
+              0.0,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.952,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.96,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.954,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 44.5,
+        "defect_rate": 5.57,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.903,
+            "bbox": [
+              0.225,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.902,
+            "bbox": [
+              0.525,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.909,
+            "bbox": [
+              0.005,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.901,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.951,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.956,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 45.0,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.953,
+            "bbox": [
+              0.23,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.908,
+            "bbox": [
+              0.53,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.958,
+            "bbox": [
+              0.01,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.933,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.95,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.945,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 45.5,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.903,
+            "bbox": [
+              0.235,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.882,
+            "bbox": [
+              0.535,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.967,
+            "bbox": [
+              0.015,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.915,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.958,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.942,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 46.0,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.884,
+            "bbox": [
+              0.24,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.912,
+            "bbox": [
+              0.54,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.96,
+            "bbox": [
+              0.02,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.942,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.937,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.896,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 46.5,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.948,
+            "bbox": [
+              0.245,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.956,
+            "bbox": [
+              0.545,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.889,
+            "bbox": [
+              0.025,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.919,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.944,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.941,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 47.0,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.929,
+            "bbox": [
+              0.25,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.892,
+            "bbox": [
+              0.55,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.933,
+            "bbox": [
+              0.03,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.95,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.956,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.967,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 47.5,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.887,
+            "bbox": [
+              0.255,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.958,
+            "bbox": [
+              0.555,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.929,
+            "bbox": [
+              0.035,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.929,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.92,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.93,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 48.0,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.916,
+            "bbox": [
+              0.26,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.96,
+            "bbox": [
+              0.56,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.946,
+            "bbox": [
+              0.04,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.962,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.954,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 48.5,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.94,
+            "bbox": [
+              0.265,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.965,
+            "bbox": [
+              0.565,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.899,
+            "bbox": [
+              0.045,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.945,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.92,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 49.0,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.947,
+            "bbox": [
+              0.27,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.934,
+            "bbox": [
+              0.57,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.898,
+            "bbox": [
+              0.05,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.932,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.965,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.929,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 49.5,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.957,
+            "bbox": [
+              0.275,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.96,
+            "bbox": [
+              0.575,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.936,
+            "bbox": [
+              0.055,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.925,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 50.0,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.94,
+            "bbox": [
+              0.28,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.909,
+            "bbox": [
+              0.58,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.925,
+            "bbox": [
+              0.06,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.942,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.962,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 50.5,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.912,
+            "bbox": [
+              0.285,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.915,
+            "bbox": [
+              0.585,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.962,
+            "bbox": [
+              0.065,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.921,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 51.0,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.887,
+            "bbox": [
+              0.29,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.922,
+            "bbox": [
+              0.59,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.907,
+            "bbox": [
+              0.07,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.944,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.92,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.902,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 51.5,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.918,
+            "bbox": [
+              0.295,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.967,
+            "bbox": [
+              0.595,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.932,
+            "bbox": [
+              0.075,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.949,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.865,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.904,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 52.0,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.96,
+            "bbox": [
+              0.3,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.928,
+            "bbox": [
+              0.6,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.932,
+            "bbox": [
+              0.08,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.95,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.907,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.94,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 52.5,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.958,
+            "bbox": [
+              0.305,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.902,
+            "bbox": [
+              0.605,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.929,
+            "bbox": [
+              0.085,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.965,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.968,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 53.0,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.893,
+            "bbox": [
+              0.31,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.885,
+            "bbox": [
+              0.61,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.969,
+            "bbox": [
+              0.09,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.913,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.925,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.923,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 53.5,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.914,
+            "bbox": [
+              0.315,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.939,
+            "bbox": [
+              0.615,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.892,
+            "bbox": [
+              0.095,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.957,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 54.0,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.881,
+            "bbox": [
+              0.32,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.908,
+            "bbox": [
+              0.62,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.962,
+            "bbox": [
+              0.1,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.954,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.954,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 54.5,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.955,
+            "bbox": [
+              0.325,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.883,
+            "bbox": [
+              0.625,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.96,
+            "bbox": [
+              0.105,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.944,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.911,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 55.0,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.924,
+            "bbox": [
+              0.33,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.94,
+            "bbox": [
+              0.63,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.893,
+            "bbox": [
+              0.11,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.957,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.967,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.95,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 55.5,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.958,
+            "bbox": [
+              0.335,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.958,
+            "bbox": [
+              0.635,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.883,
+            "bbox": [
+              0.115,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.933,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 56.0,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.89,
+            "bbox": [
+              0.34,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.953,
+            "bbox": [
+              0.64,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.969,
+            "bbox": [
+              0.12,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.916,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 56.5,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.898,
+            "bbox": [
+              0.345,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.968,
+            "bbox": [
+              0.645,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.927,
+            "bbox": [
+              0.125,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.96,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.934,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 57.0,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.906,
+            "bbox": [
+              0.35,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.918,
+            "bbox": [
+              0.65,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.919,
+            "bbox": [
+              0.13,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.962,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.956,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.927,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 57.5,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.921,
+            "bbox": [
+              0.355,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.956,
+            "bbox": [
+              0.655,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.954,
+            "bbox": [
+              0.135,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.937,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.929,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.957,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 58.0,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.903,
+            "bbox": [
+              0.36,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.894,
+            "bbox": [
+              0.66,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.934,
+            "bbox": [
+              0.14,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.907,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.92,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.934,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 58.5,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.948,
+            "bbox": [
+              0.365,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.908,
+            "bbox": [
+              0.665,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.925,
+            "bbox": [
+              0.145,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.97,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.959,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.944,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 59.0,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.941,
+            "bbox": [
+              0.37,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.95,
+            "bbox": [
+              0.67,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.894,
+            "bbox": [
+              0.15,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.948,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.944,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.939,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      },
+      {
+        "t": 59.5,
+        "defect_rate": 5.7,
+        "detections": [
+          {
+            "label": "good",
+            "confidence": 0.944,
+            "bbox": [
+              0.375,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.904,
+            "bbox": [
+              0.675,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "good",
+            "confidence": 0.925,
+            "bbox": [
+              0.155,
+              0.3,
+              0.16,
+              0.34
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.968,
+            "bbox": [
+              0.1,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.927,
+            "bbox": [
+              0.38,
+              0.2,
+              0.18,
+              0.2
+            ]
+          },
+          {
+            "label": "under_proofed",
+            "confidence": 0.953,
+            "bbox": [
+              0.66,
+              0.2,
+              0.18,
+              0.2
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "ml": {
+    "rul_hours": [
+      24,
+      72
+    ],
+    "feature_contributions": {
+      "humidity": 0.55,
+      "steam_pressure": 0.27,
+      "chamber_temp": 0.18
+    },
+    "cv_classes": [
+      "good",
+      "under_proofed",
+      "cracked"
+    ],
+    "conf_threshold": 0.5,
+    "failure_probability": [
+      {
+        "t": 0.0,
+        "p": 0.076
+      },
+      {
+        "t": 0.5,
+        "p": 0.076
+      },
+      {
+        "t": 1.0,
+        "p": 0.076
+      },
+      {
+        "t": 1.5,
+        "p": 0.076
+      },
+      {
+        "t": 2.0,
+        "p": 0.076
+      },
+      {
+        "t": 2.5,
+        "p": 0.076
+      },
+      {
+        "t": 3.0,
+        "p": 0.076
+      },
+      {
+        "t": 3.5,
+        "p": 0.076
+      },
+      {
+        "t": 4.0,
+        "p": 0.076
+      },
+      {
+        "t": 4.5,
+        "p": 0.076
+      },
+      {
+        "t": 5.0,
+        "p": 0.076
+      },
+      {
+        "t": 5.5,
+        "p": 0.076
+      },
+      {
+        "t": 6.0,
+        "p": 0.076
+      },
+      {
+        "t": 6.5,
+        "p": 0.076
+      },
+      {
+        "t": 7.0,
+        "p": 0.076
+      },
+      {
+        "t": 7.5,
+        "p": 0.076
+      },
+      {
+        "t": 8.0,
+        "p": 0.076
+      },
+      {
+        "t": 8.5,
+        "p": 0.076
+      },
+      {
+        "t": 9.0,
+        "p": 0.076
+      },
+      {
+        "t": 9.5,
+        "p": 0.076
+      },
+      {
+        "t": 10.0,
+        "p": 0.076
+      },
+      {
+        "t": 10.5,
+        "p": 0.076
+      },
+      {
+        "t": 11.0,
+        "p": 0.076
+      },
+      {
+        "t": 11.5,
+        "p": 0.076
+      },
+      {
+        "t": 12.0,
+        "p": 0.076
+      },
+      {
+        "t": 12.5,
+        "p": 0.076
+      },
+      {
+        "t": 13.0,
+        "p": 0.076
+      },
+      {
+        "t": 13.5,
+        "p": 0.076
+      },
+      {
+        "t": 14.0,
+        "p": 0.076
+      },
+      {
+        "t": 14.5,
+        "p": 0.076
+      },
+      {
+        "t": 15.0,
+        "p": 0.076
+      },
+      {
+        "t": 15.5,
+        "p": 0.076
+      },
+      {
+        "t": 16.0,
+        "p": 0.076
+      },
+      {
+        "t": 16.5,
+        "p": 0.076
+      },
+      {
+        "t": 17.0,
+        "p": 0.076
+      },
+      {
+        "t": 17.5,
+        "p": 0.076
+      },
+      {
+        "t": 18.0,
+        "p": 0.076
+      },
+      {
+        "t": 18.5,
+        "p": 0.076
+      },
+      {
+        "t": 19.0,
+        "p": 0.076
+      },
+      {
+        "t": 19.5,
+        "p": 0.076
+      },
+      {
+        "t": 20.0,
+        "p": 0.076
+      },
+      {
+        "t": 20.5,
+        "p": 0.076
+      },
+      {
+        "t": 21.0,
+        "p": 0.076
+      },
+      {
+        "t": 21.5,
+        "p": 0.076
+      },
+      {
+        "t": 22.0,
+        "p": 0.076
+      },
+      {
+        "t": 22.5,
+        "p": 0.076
+      },
+      {
+        "t": 23.0,
+        "p": 0.076
+      },
+      {
+        "t": 23.5,
+        "p": 0.076
+      },
+      {
+        "t": 24.0,
+        "p": 0.076
+      },
+      {
+        "t": 24.5,
+        "p": 0.076
+      },
+      {
+        "t": 25.0,
+        "p": 0.076
+      },
+      {
+        "t": 25.5,
+        "p": 0.087
+      },
+      {
+        "t": 26.0,
+        "p": 0.1
+      },
+      {
+        "t": 26.5,
+        "p": 0.114
+      },
+      {
+        "t": 27.0,
+        "p": 0.13
+      },
+      {
+        "t": 27.5,
+        "p": 0.148
+      },
+      {
+        "t": 28.0,
+        "p": 0.168
+      },
+      {
+        "t": 28.5,
+        "p": 0.19
+      },
+      {
+        "t": 29.0,
+        "p": 0.214
+      },
+      {
+        "t": 29.5,
+        "p": 0.24
+      },
+      {
+        "t": 30.0,
+        "p": 0.269
+      },
+      {
+        "t": 30.5,
+        "p": 0.299
+      },
+      {
+        "t": 31.0,
+        "p": 0.332
+      },
+      {
+        "t": 31.5,
+        "p": 0.366
+      },
+      {
+        "t": 32.0,
+        "p": 0.401
+      },
+      {
+        "t": 32.5,
+        "p": 0.438
+      },
+      {
+        "t": 33.0,
+        "p": 0.475
+      },
+      {
+        "t": 33.5,
+        "p": 0.512
+      },
+      {
+        "t": 34.0,
+        "p": 0.55
+      },
+      {
+        "t": 34.5,
+        "p": 0.587
+      },
+      {
+        "t": 35.0,
+        "p": 0.622
+      },
+      {
+        "t": 35.5,
+        "p": 0.657
+      },
+      {
+        "t": 36.0,
+        "p": 0.69
+      },
+      {
+        "t": 36.5,
+        "p": 0.721
+      },
+      {
+        "t": 37.0,
+        "p": 0.75
+      },
+      {
+        "t": 37.5,
+        "p": 0.777
+      },
+      {
+        "t": 38.0,
+        "p": 0.802
+      },
+      {
+        "t": 38.5,
+        "p": 0.825
+      },
+      {
+        "t": 39.0,
+        "p": 0.846
+      },
+      {
+        "t": 39.5,
+        "p": 0.864
+      },
+      {
+        "t": 40.0,
+        "p": 0.881
+      },
+      {
+        "t": 40.5,
+        "p": 0.896
+      },
+      {
+        "t": 41.0,
+        "p": 0.909
+      },
+      {
+        "t": 41.5,
+        "p": 0.921
+      },
+      {
+        "t": 42.0,
+        "p": 0.931
+      },
+      {
+        "t": 42.5,
+        "p": 0.94
+      },
+      {
+        "t": 43.0,
+        "p": 0.948
+      },
+      {
+        "t": 43.5,
+        "p": 0.955
+      },
+      {
+        "t": 44.0,
+        "p": 0.961
+      },
+      {
+        "t": 44.5,
+        "p": 0.966
+      },
+      {
+        "t": 45.0,
+        "p": 0.971
+      },
+      {
+        "t": 45.5,
+        "p": 0.971
+      },
+      {
+        "t": 46.0,
+        "p": 0.971
+      },
+      {
+        "t": 46.5,
+        "p": 0.971
+      },
+      {
+        "t": 47.0,
+        "p": 0.971
+      },
+      {
+        "t": 47.5,
+        "p": 0.971
+      },
+      {
+        "t": 48.0,
+        "p": 0.971
+      },
+      {
+        "t": 48.5,
+        "p": 0.971
+      },
+      {
+        "t": 49.0,
+        "p": 0.971
+      },
+      {
+        "t": 49.5,
+        "p": 0.971
+      },
+      {
+        "t": 50.0,
+        "p": 0.971
+      },
+      {
+        "t": 50.5,
+        "p": 0.971
+      },
+      {
+        "t": 51.0,
+        "p": 0.971
+      },
+      {
+        "t": 51.5,
+        "p": 0.971
+      },
+      {
+        "t": 52.0,
+        "p": 0.971
+      },
+      {
+        "t": 52.5,
+        "p": 0.971
+      },
+      {
+        "t": 53.0,
+        "p": 0.971
+      },
+      {
+        "t": 53.5,
+        "p": 0.971
+      },
+      {
+        "t": 54.0,
+        "p": 0.971
+      },
+      {
+        "t": 54.5,
+        "p": 0.971
+      },
+      {
+        "t": 55.0,
+        "p": 0.971
+      },
+      {
+        "t": 55.5,
+        "p": 0.971
+      },
+      {
+        "t": 56.0,
+        "p": 0.971
+      },
+      {
+        "t": 56.5,
+        "p": 0.971
+      },
+      {
+        "t": 57.0,
+        "p": 0.971
+      },
+      {
+        "t": 57.5,
+        "p": 0.971
+      },
+      {
+        "t": 58.0,
+        "p": 0.971
+      },
+      {
+        "t": 58.5,
+        "p": 0.971
+      },
+      {
+        "t": 59.0,
+        "p": 0.971
+      },
+      {
+        "t": 59.5,
+        "p": 0.971
+      }
+    ],
+    "defect_peak_rate": 5.7,
+    "baseline_rate": 0.4
+  },
+  "ground_truth": {
+    "root_cause": "Proofer humidity sensor drift -> dry chamber -> inconsistent rise.",
+    "matched_incident": "INC-2025-0155",
+    "impact_usd": [
+      5000,
+      11000
+    ]
+  }
+}

@@ -34,5 +34,9 @@ class Settings(BaseSettings):
     max_supervisor_turns: int = 8
     max_tokens_per_agent: int = 4000
 
+    # Demo replay
+    replay_speed: float = 3.0   # 1.0 = real-time; 3.0 compresses 60s -> ~20s
+    use_run_cache: bool = True  # cache the first real agent run per scenario
+
 
 settings = Settings()
