@@ -47,6 +47,8 @@ export interface TriggerResponse {
   meta: ScenarioMeta;
   channels: Channel[];
   cv_image: string;
+  ml: MLMeta;
+  ground_truth: { root_cause: string; matched_incident: string; impact_usd: [number, number] };
 }
 
 // Agent stream events (discriminated by `type`).
