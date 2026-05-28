@@ -1,13 +1,23 @@
-"""Reporting Agent (Claude Haiku 4.5).
+"""Reporting Agent (Haiku) — synthesizes the operator-facing incident report.
 
-Drafts a concise incident/summary report from the final state. Tools:
-draft_report, generate_pdf, query_rag, log_action.
-
-TODO (Wed): create_react_agent bound to report + audit tools.
+No tools: it writes a markdown report from the findings already gathered by the
+other agents (passed in as context).
 """
 
-from backend.app.config import settings
+from backend.app.agents.base import AgentConfig
 
-
-def build_reporting_agent():
-    raise NotImplementedError("TODO (Wed): build Reporting agent (Haiku)")
+CONFIG = AgentConfig(
+    name="Reporting Agent",
+    role="Operator-facing incident report",
+    model="haiku",
+    tools=[],
+    system_prompt=(
+        "You are the Reporting Agent. Write a concise, professional incident report in "
+        "Markdown for a plant operator. Use these sections: **Summary** (2-3 sentences), "
+        "**What the data shows** (equipment + quality findings as bullets with numbers), "
+        "**Root cause** (the correlation conclusion + matched incident), **Recommended "
+        "action** (the work order: parts, technician, ETA, dollar impact). Keep it under "
+        "250 words. Do not invent facts beyond the provided findings."
+    ),
+    task="Write the incident report from the findings below.",
+)

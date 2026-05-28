@@ -1,13 +1,18 @@
-"""Quality Agent (Claude Haiku 4.5).
+"""Quality Agent (Haiku) — reads CV detections, quantifies the defect spike."""
 
-Reads CV detections, computes defect-rate spikes, localizes affected zones.
-Tools: query_cv, get_defect_rate, get_cv_window, query_rag, log_action.
+from backend.app.agents.base import AgentConfig
+from backend.app.tools.cv_tools import get_cv_window, get_defect_rate, query_cv
 
-TODO (Tue): create_react_agent bound to cv + rag + audit tools.
-"""
-
-from backend.app.config import settings
-
-
-def build_quality_agent():
-    raise NotImplementedError("TODO (Tue): build Quality agent (Haiku)")
+CONFIG = AgentConfig(
+    name="Quality Agent",
+    role="Food computer vision — defect rate & affected region",
+    model="haiku",
+    tools=[get_defect_rate, query_cv, get_cv_window],
+    system_prompt=(
+        "You are the Quality Agent. Use the CV tools to quantify the product defect "
+        "rate versus baseline, the fold-change, the defect class, the onset time, and "
+        "the affected region of the product. Be concise and specific. Only use tool "
+        "outputs."
+    ),
+    task="Characterize the product quality issue on the active line.",
+)

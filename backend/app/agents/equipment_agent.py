@@ -1,14 +1,19 @@
-"""Equipment Agent (Claude Haiku 4.5).
+"""Equipment Agent (Haiku) — reads sensors, estimates RUL, explains the anomaly."""
 
-Reads sensor data, estimates remaining useful life (RUL), and explains why an
-anomaly is happening. Tools: query_sensor, get_rul, get_sensor_window, query_rag,
-log_action.
+from backend.app.agents.base import AgentConfig
+from backend.app.tools.sensor_tools import get_rul, get_sensor_window, query_sensor
 
-TODO (Tue): create_react_agent bound to sensor + rag + audit tools.
-"""
-
-from backend.app.config import settings
-
-
-def build_equipment_agent():
-    raise NotImplementedError("TODO (Tue): build Equipment agent (Haiku)")
+CONFIG = AgentConfig(
+    name="Equipment Agent",
+    role="Predictive maintenance — sensor anomaly & RUL",
+    model="haiku",
+    tools=[get_sensor_window, get_rul, query_sensor],
+    system_prompt=(
+        "You are the Equipment Agent in a bakery maintenance control room. "
+        "Use the sensor tools to find which channels are anomalous and the predictive "
+        "model's remaining-useful-life estimate. Be concise and specific: name the "
+        "equipment, the leading channel, the % change, and the RUL window. Do not invent "
+        "numbers — only use tool outputs."
+    ),
+    task="Assess the equipment health on the active line and state the likely failure mode.",
+)

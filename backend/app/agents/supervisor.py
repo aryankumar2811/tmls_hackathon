@@ -1,24 +1,9 @@
-"""LangGraph supervisor (Claude Sonnet 4.6).
+"""Supervisor entrypoint — see graph.py for the real implementation.
 
-Orchestrates the 5 specialist agents via tool-call handoffs. Chooses the next
-agent based on observed state — NOT a fixed pipeline.
-
-TODO (Tue): build the StateGraph, register handoff tools, enforce the turn cap.
-TODO: add LangSmith tracing (it's our audit trail).
+Kept as a stable import surface: the LangGraph supervisor + specialist nodes live
+in `graph.py`; the per-run driver lives in `runner.py`.
 """
 
-from backend.app.agents.state import OvenMindState
-from backend.app.config import settings
+from backend.app.agents.graph import build_graph
 
-
-def build_supervisor():
-    """Construct and compile the supervisor StateGraph.
-
-    Enforce settings.max_supervisor_turns and settings.max_tokens_per_agent.
-    """
-    raise NotImplementedError("TODO (Tue): build supervisor StateGraph")
-
-
-def run(state: OvenMindState) -> OvenMindState:
-    """Run one supervisor turn: inspect state, route to a sub-agent."""
-    raise NotImplementedError("TODO (Tue): supervisor routing logic")
+__all__ = ["build_graph"]

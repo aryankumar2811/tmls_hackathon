@@ -31,6 +31,9 @@ class Session:
     queues: dict[Stream, asyncio.Queue] = field(default_factory=dict)
     trace: list[dict] = field(default_factory=list)   # captured agent events
     report: dict | None = None
+    work_order: dict | None = None
+    tokens: int = 0
+    cost_usd: float = 0.0
 
     def __post_init__(self) -> None:
         self.queues = {s: asyncio.Queue() for s in _STREAMS}
