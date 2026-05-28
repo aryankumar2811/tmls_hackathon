@@ -18,9 +18,21 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-VENV_PY="${VENV_PY:-/Users/rajasreekumar/Documents/Code/venv/bin/python}"
-BACKEND_PORT=8000
-FRONTEND_PORT=3000
+# Pick a Python: explicit override > repo-local .venv > system python3.
+if [ -n "${VENV_PY:-}" ]; then
+  :  # honour the explicit override
+elif [ -x "./.venv/bin/python" ]; then
+  VENV_PY="./.venv/bin/python"
+elif command -v python3 >/dev/null 2>&1; then
+  VENV_PY="$(command -v python3)"
+else
+  echo "✗ no python found. Create one with: python3 -m venv .venv" >&2
+  exit 1
+fi
+echo "  python: $VENV_PY  ($("$VENV_PY" -V))"
+
+BACKEND_PORT="${BACKEND_PORT:-8000}"
+FRONTEND_PORT="${FRONTEND_PORT:-3000}"
 
 # explicitly unset so the production build defaults API_BASE to "/api" and the
 # bundle calls back through the same origin — works behind ngrok.
