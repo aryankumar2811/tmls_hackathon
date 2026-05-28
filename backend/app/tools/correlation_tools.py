@@ -59,11 +59,10 @@ def compute_correlation() -> dict:
         return {"common_root_cause_probability": 0.0, "note": "onsets not both present"}
 
     lag = round(c_onset - s_onset, 1)  # CV usually lags the sensor anomaly
-    label = s.fixture["cv"]["defect_label"]
-    region = _region(cw[-1]["detections"], label) if cw else "n/a"
+    region = s.fixture["cv"].get("region", "product surface")
 
     # spatial plausibility: a "top surface" defect aligns with a top-element fault, etc.
-    spatial_match = region not in ("n/a", "")
+    spatial_match = bool(region) and region != "n/a"
     # closer in time + spatially consistent => higher common-cause probability
     temporal_score = max(0.0, 1.0 - abs(lag) / 30.0)
     prob = round(min(0.97, 0.45 + 0.4 * temporal_score + (0.12 if spatial_match else 0)), 2)

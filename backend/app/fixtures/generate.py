@@ -42,34 +42,24 @@ def _sensor_series(rng, baseline, noise, drift_to, t):
     return round(float(val), 3)
 
 
-def _detections(rng, defect_rate, label, t):
-    """A few persistent 'good' boxes plus defect boxes whose count/confidence
-    track the defect rate. bbox = [x, y, w, h] normalized 0..1."""
+_SLOTS = 6  # product positions across one row of the conveyor
+
+
+def _detections(rng, ramp, label):
+    """One detection per product slot, evenly spaced in a single row, so the
+    box always frames its product. As the ramp rises, more slots flip to the
+    defect class. bbox = [x, y, w, h] normalized 0..1."""
+    n_def = int(round(ramp * 4))  # 0 at baseline -> 4 of 6 at peak
     dets = []
-    # 2-3 good product boxes moving along the conveyor
-    n_good = 3
-    for i in range(n_good):
-        x = (0.08 + 0.30 * i + (t * 0.01) % 0.3)
-        dets.append(
-            {
-                "label": "good",
-                "confidence": round(float(rng.uniform(0.88, 0.97)), 3),
-                "bbox": [round(x % 0.82, 3), 0.30, 0.16, 0.34],
-            }
-        )
-    # defect boxes appear and intensify with the ramp
-    n_def = int(round(defect_rate / 2.0))  # ~ up to 3-4 boxes at peak
-    for i in range(n_def):
-        conf = min(0.97, 0.55 + _ramp(t) * 0.4 + float(rng.gauss(0, 0.03)))
-        x = 0.10 + 0.28 * i
-        dets.append(
-            {
-                "label": label,
-                "confidence": round(max(0.5, conf), 3),
-                # localized to top-surface leading edge for the oven case, etc.
-                "bbox": [round(x % 0.78, 3), 0.20, 0.18, 0.20],
-            }
-        )
+    for i in range(_SLOTS):
+        x = round(0.045 + i * 0.155, 3)
+        if i < n_def:
+            conf = min(0.97, 0.80 + ramp * 0.15 + float(rng.gauss(0, 0.02)))
+            dets.append({"label": label, "confidence": round(max(0.55, conf), 3),
+                         "bbox": [x, 0.40, 0.115, 0.36]})
+        else:
+            dets.append({"label": "good", "confidence": round(float(rng.uniform(0.9, 0.97)), 3),
+                         "bbox": [x, 0.40, 0.115, 0.36]})
     return dets
 
 
@@ -96,6 +86,7 @@ SCENARIOS = {
              "baseline": 1.1, "noise": 0.08, "drift_to": 1.15},
         ],
         "defect_label": "uneven_browning",
+        "region": "top surface, leading edge",
         "defect_peak": 6.8,
         "ml": {
             "rul_hours": [14, 48],
@@ -136,6 +127,7 @@ SCENARIOS = {
              "baseline": 120.0, "noise": 0.8, "drift_to": 116.0},
         ],
         "defect_label": "dense_crumb",
+        "region": "crumb structure / interior",
         "defect_peak": 5.1,
         "ml": {
             "rul_hours": [48, 168],
@@ -174,6 +166,7 @@ SCENARIOS = {
              "baseline": 6.0, "noise": 0.05, "drift_to": 5.6},
         ],
         "defect_label": "position_offset",
+        "region": "off-center on belt",
         "defect_peak": 4.0,
         "ml": {
             "rul_hours": [8, 12],
@@ -211,6 +204,7 @@ SCENARIOS = {
              "baseline": 1.4, "noise": 0.05, "drift_to": 0.9},
         ],
         "defect_label": "under_proofed",
+        "region": "low rise / surface",
         "defect_peak": 5.7,
         "ml": {
             "rul_hours": [24, 72],
@@ -253,7 +247,7 @@ def build(name: str, spec: dict) -> dict:
             {
                 "t": t,
                 "defect_rate": rate,
-                "detections": _detections(rng, rate, spec["defect_label"], t),
+                "detections": _detections(rng, r, spec["defect_label"]),
             }
         )
         # logistic-ish failure probability rising with the ramp
@@ -272,6 +266,7 @@ def build(name: str, spec: dict) -> dict:
         "cv": {
             "image": spec["meta"]["image"],
             "defect_label": spec["defect_label"],
+            "region": spec.get("region", "product surface"),
             "baseline_rate": baseline_rate,
             "frames": cv_frames,
         },

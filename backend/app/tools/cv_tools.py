@@ -52,7 +52,7 @@ def get_defect_rate() -> dict:
         "baseline_rate_pct": baseline,
         "current_rate_pct": current,
         "fold_change": fold,
-        "affected_region": _region(window[-1]["detections"], label),
+        "affected_region": s.fixture["cv"].get("region", "product surface"),
     }
 
 
