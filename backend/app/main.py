@@ -92,7 +92,18 @@ async def stream_agent(session: str = Query(...)) -> EventSourceResponse:
         async for event in sessions.stream_events(sess):
             yield {"data": json.dumps(event, default=str)}
 
-    return EventSourceResponse(gen())
+    # Headers that tell every intermediary (Next.js prod compress, ngrok,
+    # generic reverse proxies) NOT to gzip / re-encode this response. SSE
+    # writes are small and infrequent, so any compression buffer never
+    # flushes and the browser sees zero bytes (the failure we hit on ngrok).
+    return EventSourceResponse(
+        gen(),
+        headers={
+            "Cache-Control": "no-cache, no-transform",
+            "Content-Encoding": "identity",
+            "X-Accel-Buffering": "no",
+        },
+    )
 
 
 @app.get("/report/{session}")

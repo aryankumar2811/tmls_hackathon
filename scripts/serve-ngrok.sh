@@ -55,8 +55,11 @@ done
 echo " ready."
 
 echo
-echo "→ ngrok http $FRONTEND_PORT  (Ctrl-C to stop everything)"
-echo "  share the https://*.ngrok-free.app URL printed below with your team."
+echo "→ ngrok http $FRONTEND_PORT --inspect=false  (Ctrl-C to stop everything)"
+echo "  --inspect=false disables ngrok's traffic capture, which would otherwise"
+echo "  buffer SSE responses indefinitely. Combined with the SSE response's"
+echo "  Cache-Control: no-transform header, this keeps the agent stream flowing."
+echo "  Share the https://*.ngrok-free.app URL printed below with your team."
 echo "  logs: /tmp/ovenmind-be.log  /tmp/ovenmind-fe.log  /tmp/ovenmind-build.log"
 echo
-ngrok http "$FRONTEND_PORT"
+ngrok http "$FRONTEND_PORT" --inspect=false
