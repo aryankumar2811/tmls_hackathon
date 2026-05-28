@@ -231,21 +231,9 @@ export default function IncidentDetail({
 
           {tab === "report" && (
             <div className="space-y-5">
-              <article className="max-w-none text-[13.5px] leading-relaxed text-[var(--text)]/90
-                [&_h2]:mb-1 [&_h2]:mt-4 [&_h2]:text-[11px] [&_h2]:font-semibold [&_h2]:uppercase [&_h2]:tracking-[0.12em] [&_h2]:text-[var(--muted)]
-                [&_strong]:text-[var(--text)] [&_ul]:my-1.5 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5
-                [&_p]:my-1.5 [&_code]:mono [&_code]:rounded [&_code]:bg-[var(--surface-2)] [&_code]:px-1">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                  {issue.report || fallbackReport(issue, model)}
-                </ReactMarkdown>
-              </article>
-              {!issue.report && (
-                <p className="text-[11px] text-[var(--faint)]">
-                  Showing a generated summary; the agent report appears here once
-                  the LangGraph analysis completes (requires ANTHROPIC_API_KEY).
-                </p>
-              )}
-              {issue.agentEvents.some((e) => e.type === "agent_start") && (
+              <ReportBody issue={issue} model={model} />
+              {(issue.agentEvents.some((e) => e.type === "agent_start") ||
+                issue.analysisStatus === "analyzing") && (
                 <Card title="Reasoning trace">
                   <AgentWorkflow events={issue.agentEvents} />
                 </Card>
@@ -283,6 +271,139 @@ export default function IncidentDetail({
         </div>
       </div>
     </div>
+  );
+}
+
+const REPORT_PROSE =
+  "max-w-none text-[13.5px] leading-relaxed text-[var(--text)]/90 " +
+  "[&_h2]:mb-1 [&_h2]:mt-4 [&_h2]:text-[11px] [&_h2]:font-semibold [&_h2]:uppercase [&_h2]:tracking-[0.12em] [&_h2]:text-[var(--muted)] " +
+  "[&_strong]:text-[var(--text)] [&_ul]:my-1.5 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5 " +
+  "[&_p]:my-1.5 [&_code]:mono [&_code]:rounded [&_code]:bg-[var(--surface-2)] [&_code]:px-1 " +
+  "[&_table]:mono [&_table]:my-2 [&_table]:w-full [&_table]:text-[12px] [&_table]:border-collapse " +
+  "[&_th]:border-b [&_th]:border-[var(--border)] [&_th]:py-1 [&_th]:pr-3 [&_th]:text-left [&_th]:font-medium [&_th]:text-[var(--muted)] " +
+  "[&_td]:border-b [&_td]:border-[var(--border)]/40 [&_td]:py-1 [&_td]:pr-3 [&_td]:align-top";
+
+const AGENT_SEQUENCE = [
+  "Equipment Agent",
+  "Quality Agent",
+  "Correlation Agent",
+  "Work-Order Agent",
+  "Reporting Agent",
+] as const;
+
+function ReportBody({ issue, model }: { issue: IssueState; model: ModelInfo }) {
+  // diagnosed: real report
+  if (issue.analysisStatus === "diagnosed" && issue.report) {
+    return (
+      <article className={REPORT_PROSE}>
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>{issue.report}</ReactMarkdown>
+      </article>
+    );
+  }
+
+  // analyzing: progress chips, no fallback yet
+  if (issue.analysisStatus === "analyzing") {
+    const done = new Set(
+      issue.agentEvents
+        .filter((e) => e.type === "agent_done" && e.agent)
+        .map((e) => e.agent as string),
+    );
+    const running = issue.agentEvents
+      .filter((e) => e.type === "agent_start" && e.agent && !done.has(e.agent))
+      .map((e) => e.agent as string)
+      .pop();
+    return (
+      <div className="space-y-3">
+        <div
+          className="rounded-md border bg-[var(--surface)] p-4"
+          style={{ borderColor: "var(--border)" }}
+        >
+          <div className="flex items-center gap-2 text-[13px] font-medium text-[var(--text)]">
+            <Spinner /> Analysing — agents running…
+          </div>
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {AGENT_SEQUENCE.map((a) => {
+              const isDone = done.has(a);
+              const isRunning = !isDone && a === running;
+              return (
+                <span
+                  key={a}
+                  className="rounded border px-2 py-0.5 text-[11px]"
+                  style={{
+                    color: isDone
+                      ? "var(--ok)"
+                      : isRunning
+                      ? "var(--text)"
+                      : "var(--faint)",
+                    borderColor: isDone
+                      ? "var(--ok)55"
+                      : isRunning
+                      ? "var(--border-strong)"
+                      : "var(--border)",
+                    background: isRunning ? "var(--surface-2)" : "transparent",
+                  }}
+                >
+                  {isDone ? "✓ " : isRunning ? "● " : ""}
+                  {a}
+                </span>
+              );
+            })}
+          </div>
+          <p className="mt-3 text-[11px] text-[var(--faint)]">
+            Streaming live from LangGraph. The report appears here when the Reporting
+            Agent finishes; the reasoning trace below shows each step as it completes.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // error
+  if (issue.analysisStatus === "error") {
+    return (
+      <div className="space-y-3">
+        <div
+          className="rounded-md border p-4 text-[12.5px]"
+          style={{
+            borderColor: "var(--critical)55",
+            background: "var(--critical)10",
+            color: "var(--critical)",
+          }}
+        >
+          The agent analysis failed (check ANTHROPIC_API_KEY and the backend log).
+          Showing a generated summary below.
+        </div>
+        <article className={REPORT_PROSE}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {fallbackReport(issue, model)}
+          </ReactMarkdown>
+        </article>
+      </div>
+    );
+  }
+
+  // idle: show the templated fallback with a clear "not analysed yet" notice
+  return (
+    <div className="space-y-3">
+      <p className="text-[11px] text-[var(--faint)]">
+        Showing a generated summary; the agent report appears here once the LangGraph
+        analysis runs (requires ANTHROPIC_API_KEY).
+      </p>
+      <article className={REPORT_PROSE}>
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {fallbackReport(issue, model)}
+        </ReactMarkdown>
+      </article>
+    </div>
+  );
+}
+
+function Spinner() {
+  return (
+    <span
+      className="inline-block h-3 w-3 shrink-0 animate-spin rounded-full border-2 border-current border-r-transparent"
+      style={{ color: "var(--text)" }}
+    />
   );
 }
 
