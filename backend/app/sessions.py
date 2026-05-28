@@ -11,6 +11,7 @@ consumer (SSE generators) runs in the same loop, so asyncio.Queue is safe.
 from __future__ import annotations
 
 import asyncio
+import contextvars
 import uuid
 from dataclasses import dataclass, field
 from typing import Any
@@ -76,3 +77,20 @@ async def stream_events(session: Session, stream: Stream):
         yield item
         if item.get("type") == "end":
             return
+
+
+# ── the session the agent tools should read while a run is in flight ──────
+_current: contextvars.ContextVar[Session | None] = contextvars.ContextVar(
+    "current_session", default=None
+)
+
+
+def set_current(session: Session) -> None:
+    _current.set(session)
+
+
+def current() -> Session:
+    s = _current.get()
+    if s is None:
+        raise RuntimeError("no active session (set_current was not called)")
+    return s

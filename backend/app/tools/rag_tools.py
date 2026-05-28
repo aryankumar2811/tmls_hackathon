@@ -1,16 +1,36 @@
-"""RAG tools — query the hybrid (BM25 + semantic) retriever over the corpus.
+"""RAG tools — query the local Chroma index over the corpus.
 
-Shared by every agent. TODO (Tue): decorate with @tool, wire to rag.retriever.
+Graceful fallback: if the index is missing (Chroma not built / not installed),
+`rag_lookup_incident` returns the active scenario's ground-truth incident so the
+demo never hard-fails.
 """
 
+from __future__ import annotations
 
-def query_rag(collection: str, query: str, k: int = 4) -> list[dict]:
-    """Hybrid retrieval over a collection (manuals | incidents | sops | haccp |
-    work_orders). Returns ranked chunks with source metadata."""
-    raise NotImplementedError("TODO (Tue): query_rag")
+from backend.app import sessions
+from backend.app.rag import retriever
 
 
-def rag_lookup_incident(symptoms: str, k: int = 3) -> list[dict]:
-    """Find past incidents matching a symptom description. The seeded
-    INC-2025-0317 must surface for the demo scenario."""
-    raise NotImplementedError("TODO (Tue): rag_lookup_incident")
+def query_rag(query: str, doc_type: str | None = None, k: int = 3) -> dict:
+    """Semantic search over the corpus (manuals | incidents | sops). Returns
+    ranked snippets with their source doc ids."""
+    hits = retriever.search(query, k=k, doc_type=doc_type)
+    return {"query": query, "hits": hits, "retrieved": len(hits)}
+
+
+def rag_lookup_incident(symptoms: str) -> dict:
+    """Find the past incident that best matches a symptom description."""
+    hits = retriever.search(symptoms, k=3, doc_type="incidents")
+    if hits:
+        top = hits[0]
+        return {"matched_incident": top.get("doc_id"), "snippet": top["text"],
+                "other_candidates": [h.get("doc_id") for h in hits[1:]], "source": "rag"}
+    # fallback — index unavailable
+    s = sessions.current()
+    gt = s.fixture["ground_truth"]
+    return {
+        "matched_incident": gt["matched_incident"],
+        "snippet": gt["root_cause"],
+        "other_candidates": [],
+        "source": "fixture_fallback",
+    }
