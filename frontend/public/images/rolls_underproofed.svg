@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="belt4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a1c20"/><stop offset="1" stop-color="#0e0f12"/>
+    </linearGradient>
+    <radialGradient id="roll" cx="50%" cy="42%" r="62%">
+      <stop offset="0" stop-color="#ecd6a8"/><stop offset="1" stop-color="#c9a86a"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#belt4)"/>
+  <g>
+    <!-- under-proofed = small, pale, tight rolls -->
+    <ellipse cx="130" cy="170" rx="46" ry="36" fill="url(#roll)"/>
+    <ellipse cx="290" cy="170" rx="44" ry="34" fill="url(#roll)"/>
+    <ellipse cx="450" cy="170" rx="46" ry="36" fill="url(#roll)"/>
+    <ellipse cx="610" cy="170" rx="43" ry="33" fill="url(#roll)"/>
+    <ellipse cx="210" cy="330" rx="45" ry="35" fill="url(#roll)"/>
+    <ellipse cx="370" cy="330" rx="44" ry="34" fill="url(#roll)"/>
+    <ellipse cx="530" cy="330" rx="46" ry="36" fill="url(#roll)"/>
+    <ellipse cx="690" cy="330" rx="43" ry="33" fill="url(#roll)"/>
+    <g stroke="#a98c54" stroke-width="2" opacity="0.7" fill="none">
+      <path d="M110 168 q20 -14 40 0"/><path d="M270 168 q20 -14 40 0"/><path d="M430 168 q20 -14 40 0"/>
+    </g>
+  </g>
+  <text x="16" y="28" fill="#6b7280" font-family="monospace" font-size="15">CAM-04 · Line 4 · Rolls (under-proofed)</text>
+</svg>
