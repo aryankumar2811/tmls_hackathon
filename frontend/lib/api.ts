@@ -2,8 +2,10 @@
 
 import type { Issue, ModelInfo } from "./types";
 
-export const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8000";
+// Same-origin /api by default — Next.js rewrites proxy to FastAPI. Set
+// NEXT_PUBLIC_API_BASE to an absolute URL only when calling a backend on a
+// different origin (e.g. Vercel frontend + Render backend, no rewrites).
+export const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "/api";
 
 export async function runSimulation(): Promise<Issue[]> {
   const r = await fetch(`${API_BASE}/simulate`, { method: "POST" });
