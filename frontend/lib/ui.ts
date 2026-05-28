@@ -8,7 +8,6 @@ export function cn(...parts: (string | false | null | undefined)[]): string {
 
 export const SEVERITY: Record<Severity, { label: string; color: string }> = {
   critical: { label: "Critical", color: "var(--critical)" },
-  high: { label: "High", color: "var(--high)" },
   medium: { label: "Medium", color: "var(--medium)" },
   low: { label: "Low", color: "var(--low)" },
 };

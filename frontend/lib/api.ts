@@ -1,31 +1,32 @@
 // REST helpers for the OvenMind backend.
 
-import type { ReportResponse, ScenarioMeta, TriggerResponse } from "./types";
+import type { Issue, ModelInfo } from "./types";
 
 export const API_BASE =
   process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8000";
 
-export async function getScenarios(): Promise<ScenarioMeta[]> {
-  const r = await fetch(`${API_BASE}/scenarios`, { cache: "no-store" });
-  if (!r.ok) throw new Error(`GET /scenarios ${r.status}`);
-  return (await r.json()).scenarios;
+export async function runSimulation(): Promise<Issue[]> {
+  const r = await fetch(`${API_BASE}/simulate`, { method: "POST" });
+  if (!r.ok) throw new Error(`POST /simulate ${r.status}`);
+  return (await r.json()).issues;
 }
 
-export async function triggerScenario(id: string): Promise<TriggerResponse> {
-  const r = await fetch(`${API_BASE}/trigger?scenario=${encodeURIComponent(id)}`, {
+export async function getIssues(): Promise<Issue[]> {
+  const r = await fetch(`${API_BASE}/issues`, { cache: "no-store" });
+  if (!r.ok) throw new Error(`GET /issues ${r.status}`);
+  return (await r.json()).issues;
+}
+
+export async function analyzeIssue(id: string): Promise<{ session: string }> {
+  const r = await fetch(`${API_BASE}/issues/${encodeURIComponent(id)}/analyze`, {
     method: "POST",
   });
-  if (!r.ok) throw new Error(`POST /trigger ${r.status}`);
+  if (!r.ok) throw new Error(`POST /issues/${id}/analyze ${r.status}`);
   return r.json();
 }
 
-export async function getReport(session: string): Promise<ReportResponse> {
-  const r = await fetch(`${API_BASE}/report/${session}`, { cache: "no-store" });
-  if (!r.ok) throw new Error(`GET /report ${r.status}`);
+export async function getModelInfo(): Promise<ModelInfo> {
+  const r = await fetch(`${API_BASE}/model/info`, { cache: "no-store" });
+  if (!r.ok) throw new Error(`GET /model/info ${r.status}`);
   return r.json();
-}
-
-export function imageUrl(path: string): string {
-  // fixture image paths are absolute ("/images/..") served from /public
-  return path.startsWith("http") ? path : path;
 }

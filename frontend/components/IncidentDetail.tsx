@@ -4,64 +4,75 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import type { AgentEvent, Incident } from "@/lib/types";
+import type { IssueState, ModelInfo } from "@/lib/types";
 import { cn, relTime, SEVERITY, usd } from "@/lib/ui";
 import { Metric, SeverityBadge, StatusBadge } from "./ui";
+import ClassProbabilityBar from "./ClassProbabilityBar";
+import FeatureValuesTable from "./FeatureValuesTable";
+import VisionPlaceholder from "./VisionPlaceholder";
 import AgentWorkflow from "./AgentWorkflow";
-import VisionPanel from "./VisionPanel";
-import PredictivePanel from "./PredictivePanel";
 
 type Tab = "overview" | "report" | "raw";
 
-function currentFailureProb(inc: Incident): number {
-  const c = inc.ml.failure_probability ?? [];
-  return [...c].reverse().find((p) => p.t <= inc.playhead)?.p ?? c[c.length - 1]?.p ?? 0;
+function prettyFeature(n: string): string {
+  return n.replace(/_/g, " ").replace(/Pct/g, "%").replace(/mm s/g, "mm/s");
 }
 
-function correlationConfidence(events: AgentEvent[]): number | null {
-  for (const e of events) {
-    if (e.type === "tool_result" && e.tool === "compute_correlation") {
-      const r = e.result as { common_root_cause_probability?: number } | undefined;
-      if (r?.common_root_cause_probability != null) return r.common_root_cause_probability;
-    }
-  }
-  return null;
-}
-
-function fallbackReport(inc: Incident): string {
-  const latest = inc.cvFrames[inc.cvFrames.length - 1];
-  const rate = latest?.defect_rate ?? inc.ml.defect_peak_rate;
-  const fold = (rate / inc.ml.baseline_rate).toFixed(0);
-  const [lo, hi] = inc.groundTruth.impact_usd;
-  const wo = inc.workOrder;
+function fallbackReport(i: IssueState, model: ModelInfo): string {
+  const top = i.prediction.top_features
+    .map((n) => {
+      const v = i.features[n];
+      const b = model.baselines[n];
+      const unit = model.units[n] ?? "";
+      if (typeof v !== "number" || typeof b !== "number" || b === 0)
+        return `- ${prettyFeature(n)}: ${String(v ?? "—")}`;
+      const pct = (((v - b) / b) * 100).toFixed(0);
+      return `- ${prettyFeature(n)}: **${v}${unit}** (baseline ${b}${unit}, ${pct}% vs baseline)`;
+    })
+    .join("\n");
+  const probs = i.prediction.probabilities;
+  const dr = i.features.Defect_Rate_Pct;
+  const dc = i.features.Defect_Count;
+  const action = i.context.corrective_action ?? "Dispatch maintenance per SOP.";
   return [
     `## Summary`,
-    `${inc.meta.equipment_name} (${inc.meta.equipment_id}) on ${inc.meta.line} shows an equipment anomaly correlated with a rising **${inc.meta.product}** defect rate on the vision line. Likely a single common root cause.`,
+    `${i.machine_name} (${i.equipment_id}) on ${i.line} at ${i.plant} predicted **${i.severity}** severity by the model (P(critical) = ${(probs[2] * 100).toFixed(1)}%).`,
     `## What the data shows`,
-    `- Predictive model failure probability: **${Math.round(currentFailureProb(inc) * 100)}%**, RUL ${inc.ml.rul_hours[0]}–${inc.ml.rul_hours[1]} h.`,
-    `- Vision defect rate **${rate.toFixed(1)}%** vs ${inc.ml.baseline_rate}% baseline (~${fold}×).`,
-    `- Leading feature: **${Object.entries(inc.ml.feature_contributions).sort((a, b) => b[1] - a[1])[0]?.[0]}**.`,
+    top,
+    `- Quality signal (defect-count sensor): **${dc ?? "—"}** units, **${dr ?? "—"}%** rate. Vision model pending.`,
     `## Root cause`,
-    `${inc.groundTruth.root_cause} Matches historical incident **${inc.groundTruth.matched_incident}**.`,
+    `${i.context.ground_truth_description ?? "Equipment anomaly correlated with elevated quality-signal readings on the same record."}`,
+    i.context.error_code
+      ? `Recent controller event: ${i.context.error_code} — ${i.context.error_description ?? ""}.`
+      : "",
     `## Recommended action`,
-    wo
-      ? `Open work order **${wo.wo_id}** — parts: ${wo.parts.join(", ")}; technician ${wo.technician}; ETA ${wo.eta_hours} h; estimated impact ${usd(lo)}–${usd(hi)} if not actioned.`
-      : `Dispatch maintenance for ${inc.meta.equipment_id}; estimated impact ${usd(lo)}–${usd(hi)} if not actioned.`,
-  ].join("\n\n");
+    i.workOrder
+      ? `Open work order **${i.workOrder.wo_id}** — parts: ${i.workOrder.parts.join(", ")}; technician ${i.workOrder.technician}; ETA ${i.workOrder.eta_hours} h; estimated impact ${usd(i.workOrder.estimated_impact_usd[0])}–${usd(i.workOrder.estimated_impact_usd[1])}.`
+      : action,
+  ].filter(Boolean).join("\n\n");
 }
 
-export default function IncidentDetail({ incident, onClose }: { incident: Incident; onClose: () => void }) {
+export default function IncidentDetail({
+  issue,
+  model,
+  onClose,
+}: {
+  issue: IssueState;
+  model: ModelInfo;
+  onClose: () => void;
+}) {
   const [tab, setTab] = useState<Tab>("overview");
-  const sev = SEVERITY[incident.meta.severity];
-  const latestCV = incident.cvFrames[incident.cvFrames.length - 1];
-  const corr = correlationConfidence(incident.agentEvents);
-  const failP = currentFailureProb(incident);
+  const sev = SEVERITY[issue.severity];
 
   const tabs: { id: Tab; label: string }[] = [
     { id: "overview", label: "Overview" },
     { id: "report", label: "Agent report" },
     { id: "raw", label: "Raw ML output" },
   ];
+
+  const probs = issue.prediction.probabilities;
+  const featCount = issue.features.Defect_Count;
+  const featRate = issue.features.Defect_Rate_Pct;
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-black/55" onClick={onClose}>
@@ -71,24 +82,60 @@ export default function IncidentDetail({ incident, onClose }: { incident: Incide
         onClick={(e) => e.stopPropagation()}
       >
         {/* header */}
-        <div className="flex items-start justify-between border-b px-6 py-4" style={{ borderColor: "var(--border)" }}>
+        <div
+          className="flex items-start justify-between border-b px-6 py-4"
+          style={{ borderColor: "var(--border)" }}
+        >
           <div className="min-w-0">
             <div className="flex items-center gap-2.5">
-              <h2 className="truncate text-[17px] font-semibold text-[var(--text)]">{incident.meta.title}</h2>
-              <SeverityBadge severity={incident.meta.severity} />
-              <StatusBadge tone={incident.status === "diagnosed" ? "diagnosed" : "investigating"}>
-                {incident.status === "diagnosed" ? "Diagnosed" : "Investigating"}
+              <h2 className="truncate text-[17px] font-semibold text-[var(--text)]">
+                {issue.title}
+              </h2>
+              <SeverityBadge severity={issue.severity} />
+              <StatusBadge
+                tone={
+                  issue.analysisStatus === "diagnosed"
+                    ? "diagnosed"
+                    : issue.analysisStatus === "analyzing"
+                    ? "investigating"
+                    : "neutral"
+                }
+              >
+                {issue.analysisStatus === "diagnosed"
+                  ? "Diagnosed"
+                  : issue.analysisStatus === "analyzing"
+                  ? "Analyzing"
+                  : issue.analysisStatus === "error"
+                  ? "Analysis error"
+                  : "Pending"}
               </StatusBadge>
             </div>
             <div className="mono mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[11px] text-[var(--faint)]">
-              <span>{incident.meta.line}</span><span>·</span>
-              <span>{incident.meta.equipment_name} ({incident.meta.equipment_id})</span><span>·</span>
-              <span>detected {relTime(incident.detectedAt)}</span><span>·</span>
-              <span>{incident.cached ? "cached" : "live"} · {incident.tokens} tok · ${incident.cost.toFixed(4)}</span>
+              <span>{issue.id}</span>
+              <span>·</span>
+              <span>{issue.equipment_id}</span>
+              <span>·</span>
+              <span>{issue.plant}</span>
+              <span>·</span>
+              <span>{issue.machine_type}</span>
+              <span>·</span>
+              <span>detected {relTime(issue.detectedAt)}</span>
+              {(issue.tokens > 0 || issue.cached) && (
+                <>
+                  <span>·</span>
+                  <span>
+                    {issue.cached ? "cached" : "live"} · {issue.tokens} tok · $
+                    {issue.cost.toFixed(4)}
+                  </span>
+                </>
+              )}
             </div>
           </div>
-          <button onClick={onClose} className="rounded-md border p-1.5 text-[var(--muted)] hover:text-[var(--text)]"
-            style={{ borderColor: "var(--border)" }}>
+          <button
+            onClick={onClose}
+            className="rounded-md border p-1.5 text-[var(--muted)] hover:text-[var(--text)]"
+            style={{ borderColor: "var(--border)" }}
+          >
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -96,11 +143,23 @@ export default function IncidentDetail({ incident, onClose }: { incident: Incide
         {/* tabs */}
         <div className="flex gap-5 border-b px-6" style={{ borderColor: "var(--border)" }}>
           {tabs.map((t) => (
-            <button key={t.id} onClick={() => setTab(t.id)}
-              className={cn("relative -mb-px py-2.5 text-[13px] font-medium transition-colors",
-                tab === t.id ? "text-[var(--text)]" : "text-[var(--muted)] hover:text-[var(--text)]")}>
+            <button
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className={cn(
+                "relative -mb-px py-2.5 text-[13px] font-medium transition-colors",
+                tab === t.id
+                  ? "text-[var(--text)]"
+                  : "text-[var(--muted)] hover:text-[var(--text)]",
+              )}
+            >
               {t.label}
-              {tab === t.id && <span className="absolute inset-x-0 -bottom-px h-0.5" style={{ background: sev.color }} />}
+              {tab === t.id && (
+                <span
+                  className="absolute inset-x-0 -bottom-px h-0.5"
+                  style={{ background: sev.color }}
+                />
+              )}
             </button>
           ))}
         </div>
@@ -109,29 +168,62 @@ export default function IncidentDetail({ incident, onClose }: { incident: Incide
         <div className="scroll-thin flex-1 overflow-y-auto px-6 py-5">
           {tab === "overview" && (
             <div className="space-y-5">
+              <Card title="Equipment">
+                <dl className="grid grid-cols-[120px_1fr] gap-y-1.5 text-[12.5px]">
+                  <Row k="Machine" v={`${issue.machine_name} (${issue.machine_type})`} />
+                  <Row k="Manufacturer" v={issue.manufacturer} />
+                  <Row k="Line / plant" v={`${issue.line} · ${issue.plant}`} />
+                  {issue.product && <Row k="Product" v={issue.product} />}
+                  {issue.context.error_code && (
+                    <Row
+                      k="Controller event"
+                      v={`${issue.context.error_code} — ${issue.context.error_description ?? ""}`}
+                    />
+                  )}
+                  {issue.context.last_maintenance_date && (
+                    <Row
+                      k="Last maintenance"
+                      v={`${issue.context.last_maintenance_date} (${issue.context.maintenance_type ?? "—"})`}
+                    />
+                  )}
+                  {issue.context.operator_id && (
+                    <Row k="Operator / shift" v={`${issue.context.operator_id} · ${issue.context.shift ?? ""}`} />
+                  )}
+                </dl>
+              </Card>
+
               <div className="grid grid-cols-2 gap-2.5 md:grid-cols-4">
-                <Metric label="Failure prob." value={`${Math.round(failP * 100)}%`}
-                  color={failP > 0.7 ? "var(--critical)" : failP > 0.4 ? "var(--high)" : "var(--text)"} />
-                <Metric label="Remaining life" value={`${incident.ml.rul_hours[0]}–${incident.ml.rul_hours[1]}h`} />
-                <Metric label="Defect rate" value={latestCV ? `${latestCV.defect_rate.toFixed(1)}%` : "—"}
-                  sub={`baseline ${incident.ml.baseline_rate}%`} />
-                <Metric label="Common cause" value={corr != null ? `${Math.round(corr * 100)}%` : "—"}
-                  sub="cross-modal" color={corr != null ? "var(--ok)" : undefined} />
+                <Metric
+                  label="Predicted severity"
+                  value={issue.severity.replace(/^./, (c) => c.toUpperCase())}
+                  color={sev.color}
+                />
+                <Metric label="P(critical)" value={`${(probs[2] * 100).toFixed(1)}%`} />
+                <Metric label="Defect rate" value={featRate != null ? `${featRate}%` : "—"} />
+                <Metric label="Defect count" value={featCount ?? "—"} />
               </div>
 
               <Card title="Diagnosis">
-                <p className="text-[13.5px] leading-relaxed text-[var(--text)]/90">{incident.groundTruth.root_cause}</p>
-                <p className="mt-2 text-[12px] text-[var(--muted)]">
-                  Matched historical incident{" "}
-                  <span className="mono text-[var(--text)]">{incident.groundTruth.matched_incident}</span>.
-                </p>
-              </Card>
-
-              <Card title="Recommended action">
-                {incident.workOrder ? <WorkOrderCard wo={incident.workOrder} /> : (
-                  <p className="text-[13px] text-[var(--muted)]">
-                    Work order is being prepared by the agent…
-                  </p>
+                {issue.workOrder ? (
+                  <WorkOrderCard wo={issue.workOrder} />
+                ) : (
+                  <div className="space-y-2">
+                    <p className="text-[13px] text-[var(--text)]/90">
+                      {issue.context.ground_truth_description ??
+                        "Awaiting agent analysis."}
+                    </p>
+                    {issue.context.corrective_action && (
+                      <p className="text-[12px] text-[var(--muted)]">
+                        Suggested action (from records):{" "}
+                        <span className="text-[var(--text)]/90">
+                          {issue.context.corrective_action}
+                        </span>
+                      </p>
+                    )}
+                    <p className="text-[11px] text-[var(--faint)]">
+                      Open the Agent report tab to run the LangGraph analysis.
+                    </p>
+                  </div>
                 )}
               </Card>
             </div>
@@ -144,18 +236,18 @@ export default function IncidentDetail({ incident, onClose }: { incident: Incide
                 [&_strong]:text-[var(--text)] [&_ul]:my-1.5 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5
                 [&_p]:my-1.5 [&_code]:mono [&_code]:rounded [&_code]:bg-[var(--surface-2)] [&_code]:px-1">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                  {incident.report || fallbackReport(incident)}
+                  {issue.report || fallbackReport(issue, model)}
                 </ReactMarkdown>
               </article>
-              {!incident.report && (
+              {!issue.report && (
                 <p className="text-[11px] text-[var(--faint)]">
-                  Showing a generated summary; the agent report streams in once analysis completes
-                  (requires ANTHROPIC_API_KEY).
+                  Showing a generated summary; the agent report appears here once
+                  the LangGraph analysis completes (requires ANTHROPIC_API_KEY).
                 </p>
               )}
-              {incident.agentEvents.some((e) => e.type === "agent_start") && (
+              {issue.agentEvents.some((e) => e.type === "agent_start") && (
                 <Card title="Reasoning trace">
-                  <AgentWorkflow events={incident.agentEvents} />
+                  <AgentWorkflow events={issue.agentEvents} />
                 </Card>
               )}
             </div>
@@ -164,15 +256,27 @@ export default function IncidentDetail({ incident, onClose }: { incident: Incide
           {tab === "raw" && (
             <div className="space-y-6">
               <section>
-                <SectionLabel>Vision model · {incident.meta.product}</SectionLabel>
-                <VisionPanel detections={latestCV?.detections ?? []} defectRate={latestCV?.defect_rate}
-                  caption={`${incident.meta.line} · ${incident.meta.product}`} />
-                <DetectionsTable detections={latestCV?.detections ?? []} />
+                <SectionLabel>Predictive model — RandomForest</SectionLabel>
+                <ClassProbabilityBar
+                  probabilities={probs as [number, number, number]}
+                  predicted={issue.prediction.class}
+                />
               </section>
+
               <section>
-                <SectionLabel>Predictive maintenance model</SectionLabel>
-                <PredictivePanel ml={incident.ml} channels={incident.channels}
-                  frames={incident.sensorFrames} playhead={incident.playhead} fireAt={incident.meta.fire_at_t} />
+                <SectionLabel>Feature values vs typical baselines</SectionLabel>
+                <FeatureValuesTable features={issue.features} model={model} />
+                <p className="mono mt-2 text-[11px] text-[var(--faint)]">
+                  Sensor_Status: {(issue.features.Sensor_Status as string) || "—"}
+                </p>
+              </section>
+
+              <section>
+                <SectionLabel>Vision model</SectionLabel>
+                <VisionPlaceholder
+                  defectCount={featCount as number | null | undefined}
+                  defectRatePct={featRate as number | null | undefined}
+                />
               </section>
             </div>
           )}
@@ -185,23 +289,42 @@ export default function IncidentDetail({ incident, onClose }: { incident: Incide
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="rounded-md border bg-[var(--surface)] p-4" style={{ borderColor: "var(--border)" }}>
-      <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted)]">{title}</div>
+      <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted)]">
+        {title}
+      </div>
       {children}
     </div>
   );
 }
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <h3 className="mb-2 text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted)]">{children}</h3>;
+  return (
+    <h3 className="mb-2 text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted)]">
+      {children}
+    </h3>
+  );
 }
 
-function WorkOrderCard({ wo }: { wo: NonNullable<Incident["workOrder"]> }) {
+function Row({ k, v }: { k: string; v: string }) {
+  return (
+    <div className="contents">
+      <dt className="text-[var(--muted)]">{k}</dt>
+      <dd className="text-[var(--text)]">{v}</dd>
+    </div>
+  );
+}
+
+function WorkOrderCard({ wo }: { wo: NonNullable<IssueState["workOrder"]> }) {
   const rows: [string, string][] = [
     ["Work order", wo.wo_id],
+    ["Root cause", wo.root_cause],
     ["Parts", wo.parts.join(", ")],
     ["Technician", wo.technician],
     ["ETA", `${wo.eta_hours} h`],
-    ["Est. impact", `${usd(wo.estimated_impact_usd[0])}–${usd(wo.estimated_impact_usd[1])}`],
+    [
+      "Est. impact",
+      `${usd(wo.estimated_impact_usd[0])}–${usd(wo.estimated_impact_usd[1])}`,
+    ],
   ];
   return (
     <dl className="grid grid-cols-[120px_1fr] gap-y-1.5 text-[12.5px]">
@@ -212,29 +335,5 @@ function WorkOrderCard({ wo }: { wo: NonNullable<Incident["workOrder"]> }) {
         </div>
       ))}
     </dl>
-  );
-}
-
-function DetectionsTable({ detections }: { detections: { label: string; confidence: number; bbox: number[] }[] }) {
-  if (detections.length === 0) return null;
-  return (
-    <table className="mono mt-2 w-full text-[11px]">
-      <thead>
-        <tr className="text-left text-[var(--faint)]">
-          <th className="py-1 font-normal">class</th>
-          <th className="py-1 font-normal">conf</th>
-          <th className="py-1 font-normal">bbox [x y w h]</th>
-        </tr>
-      </thead>
-      <tbody>
-        {detections.map((d, i) => (
-          <tr key={i} className="border-t" style={{ borderColor: "var(--border)" }}>
-            <td className="py-1" style={{ color: d.label === "good" ? "var(--ok)" : "var(--critical)" }}>{d.label}</td>
-            <td className="py-1 text-[var(--text)]">{(d.confidence * 100).toFixed(1)}%</td>
-            <td className="py-1 text-[var(--muted)]">[{d.bbox.map((n) => n.toFixed(2)).join(" ")}]</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
   );
 }

@@ -1,60 +1,68 @@
 // Types mirroring the FastAPI backend payloads.
 
-export type Severity = "low" | "medium" | "high" | "critical";
+export type Severity = "low" | "medium" | "critical";
 
-export interface ScenarioMeta {
-  id: string;
+export interface Prediction {
+  class: 1 | 2 | 3;
+  class_name: Severity;
+  probabilities: [number, number, number];
+  top_features: string[];
+  anomalous_features: string[];
+}
+
+export interface IssueContext {
+  error_code: string | null;
+  error_description: string | null;
+  last_maintenance_date: string | null;
+  maintenance_type: string | null;
+  firmware_version: string | null;
+  operator_id: string | null;
+  shift: string | null;
+  ground_truth_severity: number | null;
+  ground_truth_description: string | null;
+  corrective_action: string | null;
+}
+
+/** A single record predicted by the model; rendered as a row in the table. */
+export interface Issue {
+  id: string;                              // Record_ID, e.g. "REC-00459"
+  equipment_id: string;
+  machine_name: string;
+  machine_type: string;
+  line: string;
+  plant: string;
+  manufacturer: string;
+  product: string | null;
+  title: string;
+  detectedAt: number;                      // ms epoch
+  severity: Severity;
+  features: Record<string, number | string | null>;
+  prediction: Prediction;
+  context: IssueContext;
+}
+
+export interface WorkOrder {
+  wo_id: string;
   equipment_id: string;
   equipment_name: string;
   line: string;
-  title: string;
+  plant: string;
   severity: Severity;
-  product: string;
-  image: string;
-  fire_at_t: number;
-  hz: number;
-  duration_s: number;
-}
-
-export interface Channel {
-  key: string;
-  label: string;
-  unit: string;
-  baseline: number;
-  drift_to: number;
-}
-
-export interface SensorFrame {
-  t: number;
-  values: Record<string, number>;
-}
-
-export interface Detection {
-  label: string;
-  confidence: number;
-  bbox: [number, number, number, number]; // x, y, w, h (normalized)
-}
-
-export interface CVFrame {
-  t: number;
-  defect_rate: number;
-  detections: Detection[];
-}
-
-export interface TriggerResponse {
-  session: string;
-  scenario: string;
-  meta: ScenarioMeta;
-  channels: Channel[];
-  cv_image: string;
-  ml: MLMeta;
-  ground_truth: { root_cause: string; matched_incident: string; impact_usd: [number, number] };
+  root_cause: string;
+  parts: string[];
+  technician: string;
+  eta_hours: number;
+  estimated_impact_usd: [number, number];
+  error_code?: string | null;
+  suggested_action_csv?: string | null;
+  created: string;
+  pdf?: { pdf_path: string | null; ok: boolean; note?: string };
+  slack?: { posted: boolean; note?: string };
 }
 
 // Agent stream events (discriminated by `type`).
 export interface AgentEvent {
   type:
-    | "notification"
     | "supervisor"
     | "agent_start"
     | "tool_call"
@@ -81,76 +89,27 @@ export interface AgentEvent {
   cost?: number;
   message?: string;
   cached?: boolean;
-  severity?: Severity;
-  title?: string;
-  equipment_id?: string;
-  line?: string;
-  t?: number;
 }
 
-export interface WorkOrder {
-  wo_id: string;
-  equipment_id: string;
-  equipment_name: string;
-  line: string;
-  severity: Severity;
-  root_cause: string;
-  parts: string[];
-  technician: string;
-  eta_hours: number;
-  estimated_impact_usd: [number, number];
-  matched_incident?: string;
-  created: string;
-  pdf?: { pdf_path: string | null; ok: boolean; note?: string };
-  slack?: { posted: boolean; note?: string };
+export interface ModelInfo {
+  feature_names: string[];
+  numeric_features: string[];
+  feature_importances: Record<string, number>;
+  class_labels: [1, 2, 3];
+  class_names: Record<1 | 2 | 3, Severity>;
+  baselines: Record<string, number>;
+  anomaly_thresholds: Record<string, number>;
+  units: Record<string, string>;
 }
 
-export interface ReportResponse {
-  session: string;
-  scenario: string;
-  status: string;
-  cached: boolean;
-  tokens: number;
-  cost_usd: number;
-  report: {
-    markdown: string;
-    findings: Record<string, string>;
-    work_order: WorkOrder | null;
-  } | null;
-  work_order: WorkOrder | null;
-  trace: AgentEvent[];
-  ml: MLMeta;
-  cv_image: string;
-  ground_truth: { root_cause: string; matched_incident: string; impact_usd: [number, number] };
-  meta: ScenarioMeta;
-}
-
-// Client-side aggregate for one triggered incident (one session).
-export interface Incident {
-  session: string;
-  meta: ScenarioMeta;
-  channels: Channel[];
-  ml: MLMeta;
-  groundTruth: { root_cause: string; matched_incident: string; impact_usd: [number, number] };
-  sensorFrames: SensorFrame[];
-  cvFrames: CVFrame[];
+/** Per-issue client-side aggregate including any in-flight analysis. */
+export interface IssueState extends Issue {
+  analysisStatus: "idle" | "analyzing" | "diagnosed" | "error";
+  session?: string;
   agentEvents: AgentEvent[];
   report?: string;
   workOrder?: WorkOrder | null;
-  status: "investigating" | "diagnosed";
-  cached: boolean;
   tokens: number;
   cost: number;
-  detectedAt: number;
-  playhead: number;
-}
-
-export interface MLMeta {
-  rul_hours: [number, number];
-  feature_contributions: Record<string, number>;
-  cv_classes: string[];
-  conf_threshold: number;
-  failure_probability: { t: number; p: number }[];
-  defect_peak_rate: number;
-  baseline_rate: number;
+  cached: boolean;
 }
