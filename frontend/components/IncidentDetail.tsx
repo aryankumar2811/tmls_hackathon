@@ -9,7 +9,7 @@ import { cn, relTime, SEVERITY, usd } from "@/lib/ui";
 import { Metric, SeverityBadge, StatusBadge } from "./ui";
 import ClassProbabilityBar from "./ClassProbabilityBar";
 import FeatureValuesTable from "./FeatureValuesTable";
-import VisionPlaceholder from "./VisionPlaceholder";
+import VisionSimulation from "./VisionSimulation";
 import AgentWorkflow from "./AgentWorkflow";
 
 type Tab = "overview" | "report" | "raw";
@@ -260,11 +260,8 @@ export default function IncidentDetail({
               </section>
 
               <section>
-                <SectionLabel>Vision model</SectionLabel>
-                <VisionPlaceholder
-                  defectCount={featCount as number | null | undefined}
-                  defectRatePct={featRate as number | null | undefined}
-                />
+                <SectionLabel>Vision model — production preview</SectionLabel>
+                <VisionSimulation issue={issue} />
               </section>
             </div>
           )}
