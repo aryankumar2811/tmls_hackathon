@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertTriangle, ChevronRight } from "lucide-react";
-import type { AgentEvent, Severity } from "@/lib/types";
+import type { Severity } from "@/lib/types";
 import { cn, SEVERITY } from "@/lib/ui";
 
 export interface Notification {
@@ -14,20 +14,6 @@ export interface Notification {
   t: number;
   analyzing: boolean;
   done: boolean;
-}
-
-export function notificationFromEvent(e: AgentEvent, session: string): Notification {
-  return {
-    session,
-    scenario: (e.severity && e.title ? "" : "") || session,
-    title: e.title ?? "Anomaly detected",
-    equipment_id: e.equipment_id ?? "",
-    line: e.line ?? "",
-    severity: (e.severity as Severity) ?? "high",
-    t: e.t ?? 0,
-    analyzing: true,
-    done: false,
-  };
 }
 
 export default function NotificationsFeed({

@@ -120,7 +120,8 @@ async def _finalize_work_order(s: sessions.Session, result: dict) -> None:
     from backend.app.tools.workorder_tools import create_wo, generate_pdf, post_slack
 
     wo = result["tools"].get("create_wo")
-    if not wo:  # agent didn't call the tool — create one deterministically
+    if not (isinstance(wo, dict) and wo.get("wo_id")):
+        # agent didn't call create_wo, or called it with bad args — build one ourselves
         gt = s.fixture["ground_truth"]
         wo = create_wo(gt["root_cause"], s.fixture["meta"]["severity"])
     pdf = generate_pdf(wo)

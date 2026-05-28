@@ -61,6 +61,8 @@ async def trigger(scenario: str = Query(...)) -> dict:
         "meta": fixture["meta"],
         "channels": fixture["channels"],
         "cv_image": fixture["cv"]["image"],
+        "ml": fixture["ml"],
+        "ground_truth": fixture["ground_truth"],
     }
 
 
