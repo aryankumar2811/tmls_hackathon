@@ -125,6 +125,26 @@ export interface ReportResponse {
   meta: ScenarioMeta;
 }
 
+// Client-side aggregate for one triggered incident (one session).
+export interface Incident {
+  session: string;
+  meta: ScenarioMeta;
+  channels: Channel[];
+  ml: MLMeta;
+  groundTruth: { root_cause: string; matched_incident: string; impact_usd: [number, number] };
+  sensorFrames: SensorFrame[];
+  cvFrames: CVFrame[];
+  agentEvents: AgentEvent[];
+  report?: string;
+  workOrder?: WorkOrder | null;
+  status: "investigating" | "diagnosed";
+  cached: boolean;
+  tokens: number;
+  cost: number;
+  detectedAt: number;
+  playhead: number;
+}
+
 export interface MLMeta {
   rul_hours: [number, number];
   feature_contributions: Record<string, number>;

@@ -1,14 +1,19 @@
 # frontend/components/
 
-shadcn/ui-based components. Build with v0.dev, then refine. Dark theme, big fonts.
+Industrial operations console (IBM Plex, restrained dark palette, no decorative motion).
 
-| Component | Data source |
+| Component | Role |
 |---|---|
-| `SensorPanel.tsx` | ECharts line charts ← `GET /stream/sensors` (SSE) |
-| `CVFeed.tsx` | Looping video + detection bboxes ← `GET /stream/cv` (SSE) |
-| `AgentLog.tsx` | Streaming reasoning log ← `GET /stream/agent` (SSE) |
-| `WorkOrderPanel.tsx` | Generated WO, severity badge, $ impact |
-| `TriggerScenario.tsx` | Dropdown → `POST /trigger?scenario=...` |
-| `ReasoningModal.tsx` | "Show reasoning": agent graph, tool calls, tokens, cost |
+| `Dashboard.tsx` | Orchestrator: loads scenarios, holds per-incident state, opens SSE streams |
+| `SimulateMenu.tsx` | Secondary demo control — inject a simulated fault event |
+| `LineStatus.tsx` | Per-line health tiles (Operational / Watch / Warning / Critical) |
+| `IssuesList.tsx` | Active-issues list; click a row to open the incident |
+| `IncidentDetail.tsx` | Slide-over with tabs: Overview · Agent report · Raw ML output |
+| `AgentWorkflow.tsx` | Static reasoning trace (agents, tool calls, tokens/cost) |
+| `VisionPanel.tsx` | Vision output — products + detection boxes from one source (aligned) |
+| `PredictivePanel.tsx` | Predictive output — failure-prob gauge, feature contributions, sensor trace |
+| `SensorChart.tsx` / `ConfidenceChart.tsx` / `Chart.tsx` | ECharts wrappers |
+| `ui.tsx` | Panel, SeverityBadge, StatusBadge, Metric primitives |
 
-Use the `subscribe()` helper in `../lib/sse.ts` for all SSE wiring.
+The home is a monitoring view (lines + active issues). Detail/ML/telemetry live inside
+the incident slide-over, opened by clicking an issue.

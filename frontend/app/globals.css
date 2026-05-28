@@ -4,55 +4,59 @@
 
 :root {
   color-scheme: dark;
-  --bg: #0a0c10;
-  --panel: #12151c;
-  --panel-2: #161a22;
-  --border: #232a36;
-  --text: #e7ecf3;
-  --muted: #8a93a3;
-  --accent: #ff7a18; /* oven ember */
+  --bg: #0b0d10;
+  --surface: #14171c;
+  --surface-2: #1a1e25;
+  --border: #262b33;
+  --border-strong: #333a45;
+  --text: #e3e6ea;
+  --muted: #888f9b;
+  --faint: #5b626d;
+
+  --ok: #3fb950;
+  --critical: #e5484d;
+  --high: #e0913a;
+  --medium: #d9b54a;
+  --low: #4a8fe0;
+
+  --font-sans: ui-sans-serif, system-ui;
+  --font-mono: ui-monospace, monospace;
 }
 
 * {
   border-color: var(--border);
 }
 
+html,
 body {
-  background:
-    radial-gradient(1200px 600px at 80% -10%, rgba(255, 122, 24, 0.06), transparent 60%),
-    var(--bg);
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
   color: var(--text);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  font-feature-settings: "tnum" 1;
+  font-feature-settings: "tnum" 1, "cv05" 1;
+  letter-spacing: -0.005em;
 }
 
 .mono {
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum" 1;
 }
 
-/* thin scrollbars in panels */
 .scroll-thin::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 .scroll-thin::-webkit-scrollbar-thumb {
-  background: #2a3240;
-  border-radius: 8px;
+  background: #2a313b;
+  border-radius: 6px;
+  border: 3px solid var(--bg);
 }
 
-@keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 rgba(255, 122, 24, 0.45); }
-  70% { box-shadow: 0 0 0 10px rgba(255, 122, 24, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 122, 24, 0); }
-}
-.pulse {
-  animation: pulse-ring 1.6s infinite;
-}
-
-@keyframes fadeup {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.fadeup {
-  animation: fadeup 0.28s ease-out both;
+/* hairline dividers that read as engineered, not decorative */
+.hairline {
+  background-image: linear-gradient(to right, var(--border) 0 1px, transparent 1px);
 }

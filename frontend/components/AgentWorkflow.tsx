@@ -1,9 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Check, Loader2, Wrench } from "lucide-react";
+import { Check, Wrench } from "lucide-react";
 import type { AgentEvent } from "@/lib/types";
-import { AGENT_COLORS, cn } from "@/lib/ui";
+import { AGENT_COLORS } from "@/lib/ui";
 
 interface ToolCall {
   tool: string;
@@ -57,11 +57,7 @@ export default function AgentWorkflow({ events }: { events: AgentEvent[] }) {
   const steps = useMemo(() => buildSteps(events), [events]);
 
   if (steps.length === 0) {
-    return (
-      <div className="flex items-center gap-2 text-sm text-[var(--muted)]">
-        <Loader2 className="h-4 w-4 animate-spin" /> Supervisor is dispatching agents…
-      </div>
-    );
+    return <div className="text-[13px] text-[var(--muted)]">Supervisor is dispatching agents…</div>;
   }
 
   return (
@@ -78,19 +74,14 @@ function StepCard({ step }: { step: Step }) {
   const [open, setOpen] = useState(true);
   const color = AGENT_COLORS[step.agent] ?? "#8a93a3";
   return (
-    <li className="fadeup relative">
+    <li className="relative">
       <span
-        className={cn("absolute -left-[22px] top-1 flex h-[18px] w-[18px] items-center justify-center rounded-full",
-          step.status === "running" && "pulse")}
-        style={{ background: color }}
+        className="absolute -left-[22px] top-1 flex h-[18px] w-[18px] items-center justify-center rounded-full"
+        style={{ background: step.status === "done" ? color : "var(--surface-2)", border: `1px solid ${color}` }}
       >
-        {step.status === "done" ? (
-          <Check className="h-3 w-3 text-[#0a0c10]" />
-        ) : (
-          <Loader2 className="h-3 w-3 animate-spin text-[#0a0c10]" />
-        )}
+        {step.status === "done" && <Check className="h-3 w-3 text-[#0b0d10]" />}
       </span>
-      <div className="rounded-lg border bg-[var(--panel-2)] p-3" style={{ borderColor: "var(--border)" }}>
+      <div className="rounded-md border bg-[var(--surface-2)] p-3" style={{ borderColor: "var(--border)" }}>
         <button onClick={() => setOpen((o) => !o)} className="flex w-full items-center justify-between text-left">
           <span>
             <span className="text-sm font-semibold" style={{ color }}>{step.agent}</span>
@@ -114,7 +105,7 @@ function StepCard({ step }: { step: Step }) {
             {step.tools.map((t, j) => (
               <div key={j} className="rounded-md border bg-[var(--bg)]/60 p-2" style={{ borderColor: "var(--border)" }}>
                 <div className="flex items-center gap-1.5 text-[12px]">
-                  <Wrench className="h-3 w-3 text-[var(--accent)]" />
+                  <Wrench className="h-3 w-3 text-[var(--muted)]" />
                   <span className="mono font-medium text-[var(--text)]">{t.tool}</span>
                   {t.args && Object.keys(t.args).length > 0 && (
                     <span className="mono truncate text-[10px] text-[var(--muted)]">

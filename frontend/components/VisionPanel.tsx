@@ -1,70 +1,88 @@
 "use client";
 
-import Image from "next/image";
 import type { Detection } from "@/lib/types";
-import ConfidenceChart from "./ConfidenceChart";
 
-/** Vision-model input/output: the product image with detection boxes overlaid. */
+/**
+ * Vision-model view. Each detection is rendered as a labelled box with its
+ * product drawn inside the same box, so the box always frames the product.
+ * No background image, no animation.
+ */
 export default function VisionPanel({
-  image,
   detections,
   defectRate,
-  threshold = 0.5,
-  showChart = true,
+  caption,
 }: {
-  image: string;
   detections: Detection[];
   defectRate?: number;
-  threshold?: number;
-  showChart?: boolean;
+  caption?: string;
 }) {
   return (
-    <div className="space-y-3">
-      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg border bg-black"
-        style={{ borderColor: "var(--border)" }}>
-        <Image src={image} alt="line camera frame" fill className="object-cover opacity-95" unoptimized />
-        {detections.map((d, i) => {
-          const good = d.label === "good";
-          const [x, y, w, h] = d.bbox;
-          return (
-            <div
-              key={i}
-              className="absolute rounded-[3px]"
-              style={{
-                left: `${x * 100}%`,
-                top: `${y * 100}%`,
-                width: `${w * 100}%`,
-                height: `${h * 100}%`,
-                border: `2px solid ${good ? "#34d399" : "#f87171"}`,
-                boxShadow: good ? "none" : "0 0 0 1px rgba(248,113,113,0.3)",
-              }}
-            >
-              <span
-                className="mono absolute -top-[18px] left-0 whitespace-nowrap rounded px-1 text-[10px] font-medium"
-                style={{ background: good ? "#34d399" : "#f87171", color: "#0a0c10" }}
+    <div
+      className="relative w-full overflow-hidden rounded-md border"
+      style={{
+        aspectRatio: "16 / 7",
+        borderColor: "var(--border)",
+        background:
+          "repeating-linear-gradient(90deg,#101317 0 38px,#0d1014 38px 40px), #0d1014",
+      }}
+    >
+      {/* belt edge guides */}
+      <span className="absolute inset-x-0 top-[26%] h-px" style={{ background: "#20252c" }} />
+      <span className="absolute inset-x-0 bottom-[8%] h-px" style={{ background: "#20252c" }} />
+
+      {detections.map((d, i) => {
+        const good = d.label === "good";
+        const color = good ? "var(--ok)" : "var(--critical)";
+        const [x, y, w, h] = d.bbox;
+        return (
+          <div
+            key={i}
+            className="absolute"
+            style={{ left: `${x * 100}%`, top: `${y * 100}%`, width: `${w * 100}%`, height: `${h * 100}%` }}
+          >
+            <div className="relative h-full w-full rounded-[3px]" style={{ border: `1.5px solid ${color}` }}>
+              {/* product */}
+              <div
+                className="absolute"
+                style={{
+                  inset: "12%",
+                  borderRadius: "46%",
+                  background: good
+                    ? "radial-gradient(60% 55% at 45% 38%, #e7c07c, #b9852f 75%, #946724)"
+                    : "radial-gradient(60% 55% at 45% 38%, #d2a35f, #8a5a26 70%, #5d3c18)",
+                }}
               >
-                {d.label} {Math.round(d.confidence * 100)}%
+                {!good && (
+                  <span
+                    className="absolute rounded-full"
+                    style={{ inset: "20% 30% 45% 18%", background: "rgba(60,32,12,0.55)", filter: "blur(2px)" }}
+                  />
+                )}
+              </div>
+              {/* label */}
+              <span
+                className="mono absolute -top-[15px] left-0 whitespace-nowrap rounded-[2px] px-1 text-[9px] font-medium leading-[14px]"
+                style={{ background: color, color: "#0b0d10" }}
+              >
+                {d.label} {Math.round(d.confidence * 100)}
               </span>
             </div>
-          );
-        })}
-        <div className="absolute right-2 top-2 rounded-md border bg-black/60 px-2 py-1 text-[10px]"
-          style={{ borderColor: "var(--border)" }}>
-          <span className="text-[var(--muted)]">YOLOv11 · </span>
-          <span className="mono text-[var(--text)]">{detections.length} det</span>
-          {defectRate != null && (
-            <span className="mono ml-2 text-red-300">{defectRate.toFixed(1)}% defect</span>
-          )}
-        </div>
-      </div>
-      {showChart && detections.length > 0 && (
-        <div>
-          <div className="mb-1 text-[10px] uppercase tracking-wider text-[var(--muted)]">
-            Detection confidence (threshold {Math.round(threshold * 100)}%)
           </div>
-          <ConfidenceChart detections={detections} threshold={threshold} />
-        </div>
-      )}
+        );
+      })}
+
+      <div className="absolute left-2.5 top-2.5 flex items-center gap-2">
+        <span className="mono rounded-[3px] border px-1.5 py-0.5 text-[10px] text-[var(--muted)]"
+          style={{ borderColor: "var(--border)", background: "rgba(11,13,16,0.7)" }}>
+          {caption ?? "LINE CAMERA"}
+        </span>
+      </div>
+      <div className="absolute right-2.5 top-2.5 mono rounded-[3px] border px-1.5 py-0.5 text-[10px]"
+        style={{ borderColor: "var(--border)", background: "rgba(11,13,16,0.7)" }}>
+        <span className="text-[var(--muted)]">YOLOv11 · </span>
+        <span className="text-[var(--text)]">{detections.length} det</span>
+        {defectRate != null && <span className="ml-2" style={{ color: "var(--critical)" }}>{defectRate.toFixed(1)}%</span>}
+      </div>
     </div>
   );
 }

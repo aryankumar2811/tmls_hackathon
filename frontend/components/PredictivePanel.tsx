@@ -2,7 +2,7 @@
 
 import Chart from "./Chart";
 import SensorChart from "./SensorChart";
-import { Stat } from "./ui";
+import { Metric } from "./ui";
 import type { Channel, MLMeta, SensorFrame } from "@/lib/types";
 
 export default function PredictivePanel({
@@ -76,13 +76,13 @@ export default function PredictivePanel({
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-3">
-        <div className="rounded-lg border bg-[var(--panel-2)] p-2" style={{ borderColor: "var(--border)" }}>
+        <div className="rounded-lg border bg-[var(--surface-2)] p-2" style={{ borderColor: "var(--border)" }}>
           <div className="px-1 text-[10px] uppercase tracking-wider text-[var(--muted)]">Failure probability</div>
           <Chart option={gauge} height={150} />
         </div>
         <div className="flex flex-col gap-2">
-          <Stat label="Remaining useful life" value={`${ml.rul_hours[0]}–${ml.rul_hours[1]} h`} accent />
-          <div className="rounded-lg border bg-[var(--panel-2)] p-2" style={{ borderColor: "var(--border)" }}>
+          <Metric label="Remaining useful life" value={`${ml.rul_hours[0]}–${ml.rul_hours[1]} h`} />
+          <div className="rounded-md border bg-[var(--surface-2)] p-2" style={{ borderColor: "var(--border)" }}>
             <div className="mb-1 px-1 text-[10px] uppercase tracking-wider text-[var(--muted)]">
               Feature contribution
             </div>
@@ -91,7 +91,7 @@ export default function PredictivePanel({
         </div>
       </div>
 
-      <div className="rounded-lg border bg-[var(--panel-2)] p-2" style={{ borderColor: "var(--border)" }}>
+      <div className="rounded-lg border bg-[var(--surface-2)] p-2" style={{ borderColor: "var(--border)" }}>
         <div className="mb-1 px-1 text-[10px] uppercase tracking-wider text-[var(--muted)]">
           Sensor channels (model input)
         </div>
