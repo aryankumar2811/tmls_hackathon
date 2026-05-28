@@ -1,25 +1,39 @@
 """FastAPI entrypoint for OvenMind.
 
-Exposes the SSE streams the dashboard subscribes to and the /trigger control
-surface that kicks off a demo scenario.
+Endpoints:
+  GET  /health
+  GET  /scenarios                  -> the 4 triggerable scenarios (meta)
+  POST /trigger?scenario=          -> create a session, start replay + agent analysis
+  GET  /stream/{kind}?session=     -> SSE: kind in {sensors, cv, agent}
+  GET  /report/{session}           -> final report + trace + ML artifacts (detail view)
 
-Run: `make backend`  (uvicorn backend.app.main:app --reload --port 8000)
-
-TODO (Tue): implement the SSE generators and wire /trigger to the simulator
-+ supervisor. Everything here is a stub so the app boots and routes resolve.
+Data is replayed from committed fixtures (it behaves like a live stream); the agent
+analysis makes real Claude calls. Both are honest demo behaviours.
 """
 
-from fastapi import FastAPI
+from __future__ import annotations
+
+import asyncio
+import json
+
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from sse_starlette.sse import EventSourceResponse
+
+from backend.app import sessions
+from backend.app.fixtures import list_scenarios, load_fixture
+from backend.app.simulator.replay import run_replay
 
 app = FastAPI(title="OvenMind", version="0.1.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+_VALID_STREAMS = {"sensors", "cv", "agent"}
 
 
 @app.get("/health")
@@ -27,38 +41,63 @@ def health() -> dict:
     return {"status": "ok"}
 
 
+@app.get("/scenarios")
+def scenarios() -> dict:
+    return {"scenarios": list_scenarios()}
+
+
 @app.post("/trigger")
-def trigger_scenario(scenario: str) -> dict:
-    """Start a demo scenario (e.g. 'oven_zone2_element_degradation').
+async def trigger(scenario: str = Query(...)) -> dict:
+    try:
+        fixture = load_fixture(scenario)
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
-    TODO (Tue): launch the drift simulator for `scenario` and let the
-    supervisor observe the resulting stream.
-    """
-    raise NotImplementedError("TODO (Tue): start scenario + supervisor")
-
-
-@app.get("/stream/sensors")
-async def stream_sensors():
-    """SSE: 8 sensor channels @ 2 Hz from the drift simulator.
-
-    TODO (Tue): return an EventSourceResponse over drift_simulator frames.
-    """
-    raise NotImplementedError("TODO (Tue): SSE sensor stream")
-
-
-@app.get("/stream/cv")
-async def stream_cv():
-    """SSE: YOLOv11 detections (bounding boxes + defect rate).
-
-    TODO (Tue): return an EventSourceResponse over cv.infer detections.
-    """
-    raise NotImplementedError("TODO (Tue): SSE CV stream")
+    session = sessions.create_session(scenario, fixture)
+    asyncio.create_task(run_replay(session))  # drives streams + launches agents
+    return {
+        "session": session.id,
+        "scenario": scenario,
+        "meta": fixture["meta"],
+        "channels": fixture["channels"],
+        "cv_image": fixture["cv"]["image"],
+    }
 
 
-@app.get("/stream/agent")
-async def stream_agent_log():
-    """SSE: the live agent reasoning / audit-trail log.
+@app.get("/stream/{kind}")
+async def stream(kind: str, session: str = Query(...)) -> EventSourceResponse:
+    if kind not in _VALID_STREAMS:
+        raise HTTPException(status_code=404, detail=f"unknown stream {kind!r}")
+    try:
+        sess = sessions.get_session(session)
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
-    TODO (Wed): stream log_action events + LangSmith trace summaries.
-    """
-    raise NotImplementedError("TODO (Wed): SSE agent log stream")
+    async def gen():
+        async for event in sessions.stream_events(sess, kind):
+            yield {"data": json.dumps(event, default=str)}
+
+    return EventSourceResponse(gen())
+
+
+@app.get("/report/{session}")
+def report(session: str) -> dict:
+    try:
+        sess = sessions.get_session(session)
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    return {
+        "session": sess.id,
+        "scenario": sess.scenario,
+        "status": sess.status,
+        "cached": sess.cached,
+        "tokens": sess.tokens,
+        "cost_usd": round(sess.cost_usd, 4),
+        "report": sess.report,
+        "work_order": sess.work_order,
+        "trace": sess.trace,
+        "ml": sess.fixture["ml"],
+        "cv_image": sess.fixture["cv"]["image"],
+        "ground_truth": sess.fixture["ground_truth"],
+        "meta": sess.fixture["meta"],
+    }
