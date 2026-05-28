@@ -26,9 +26,12 @@ from backend.app.ml.predictor import model_info
 
 app = FastAPI(title="OvenMind", version="0.2.0")
 
+# Open CORS — this is a hackathon demo, the frontend is the only client. Lets
+# the same backend serve a Vercel deploy, a second ngrok URL, etc. without
+# extra config. Lock down before any production use.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origin_regex=".*",
     allow_methods=["*"],
     allow_headers=["*"],
 )
