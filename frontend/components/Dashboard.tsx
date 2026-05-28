@@ -42,21 +42,7 @@ export default function Dashboard() {
     setIssues((p) => (p[id] ? { ...p, [id]: fn(p[id]) } : p));
   }, []);
 
-  const onRun = useCallback(async () => {
-    const list = await runSimulation();
-    // close any active streams from a previous batch
-    Object.values(closers.current).forEach((c) => c());
-    closers.current = {};
-    analyzed.current = new Set();
-    const map: Record<string, IssueState> = {};
-    list.forEach((i) => { map[i.id] = toState(i); });
-    setIssues(map);
-    setSelected(null);
-  }, []);
-
-  const onOpen = useCallback(async (id: string) => {
-    setSelected(id);
-    // kick off agent analysis on the first open (idempotent via run cache)
+  const startAnalysis = useCallback(async (id: string) => {
     if (analyzed.current.has(id)) return;
     analyzed.current.add(id);
     patch(id, (i) => ({ ...i, analysisStatus: "analyzing" }));
@@ -82,6 +68,25 @@ export default function Dashboard() {
       patch(id, (i) => ({ ...i, analysisStatus: "error" }));
     }
   }, [patch]);
+
+  const onRun = useCallback(async () => {
+    const list = await runSimulation();
+    // close any active streams from a previous batch
+    Object.values(closers.current).forEach((c) => c());
+    closers.current = {};
+    analyzed.current = new Set();
+    const map: Record<string, IssueState> = {};
+    list.forEach((i) => { map[i.id] = toState(i); });
+    setIssues(map);
+    setSelected(null);
+    // fire the LangGraph analysis for every issue right away; the table flips
+    // Analysing -> Diagnosed in real time as each one completes.
+    list.forEach((i) => { void startAnalysis(i.id); });
+  }, [startAnalysis]);
+
+  const onOpen = useCallback((id: string) => {
+    setSelected(id);
+  }, []);
 
   const list = useMemo(() => Object.values(issues), [issues]);
   const active = selected ? issues[selected] : null;
