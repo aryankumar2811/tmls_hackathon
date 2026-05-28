@@ -35,22 +35,25 @@ See [docs/architecture.md](docs/architecture.md) for the agent graph and [docs/d
 ## Quickstart
 
 ```bash
-# Python backend (uv)
-uv sync
-cp .env.example .env        # fill in API keys
+make install                # uv sync + npm install (Python 3.12 + Node 20)
+cp .env.example .env        # set ANTHROPIC_API_KEY (only key required)
 
-# Frontend
-cd frontend && npm install && cd ..
+make fixtures               # (re)generate the 4 scenario datasets (already committed)
+make ingest                 # build the local Chroma RAG index from corpus/ (no API key)
 
-# Run everything
-make install                # uv sync + npm install
-make backend                # FastAPI on :8000
-make frontend               # Next.js on :3000
-make ingest                 # build the Chroma RAG index from corpus/
-make sim                    # run the drift simulator standalone
+make backend                # FastAPI + SSE on :8000
+make frontend               # Next.js control room on :3000  ->  open http://localhost:3000
 ```
 
-> This is a **skeleton**. Most modules are stubs that raise `NotImplementedError`. Fill them in per the day-by-day plan.
+Open the dashboard, click a scenario under **Trigger scenario**, watch the sensor
+chart drift and a notification fire, then click the notification to see the LLM
+incident report, the live agent workflow, and the ML model panels.
+
+> **What's real vs. mocked:** the LangGraph supervisor + agents make real Claude calls;
+> the sensor/CV data is committed fixture data replayed to behave like a live stream
+> (the two ML models are not run — their outputs come from the fixtures). The first
+> trigger of each scenario runs the agents for real and is cached; later triggers replay
+> the cached run instantly and for free (`USE_RUN_CACHE`).
 
 ---
 

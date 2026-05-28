@@ -21,7 +21,8 @@ npm run dev            # http://localhost:3000
 ```
 Set `NEXT_PUBLIC_API_BASE` (defaults to http://localhost:8000).
 
-> Skeleton: config files are valid; components are documented stubs (see
-> `components/README.md`). `npm install` is NOT run in this phase.
+The dashboard is implemented (`components/Dashboard.tsx` orchestrates SSE + state).
+Clicking a notification opens `IncidentDetail` with the Report / Agent Workflow /
+ML Models tabs. Build is verified: `npm run build` compiles clean.
 
-Deploy to **Vercel** (one `git push`). Get a static version up by Monday EOD.
+Deploy to **Vercel** (one `git push`); set `NEXT_PUBLIC_API_BASE` to the backend URL.
