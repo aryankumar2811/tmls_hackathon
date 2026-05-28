@@ -2,13 +2,14 @@
 
 Endpoints:
   GET  /health
-  GET  /scenarios                  -> the 4 triggerable scenarios (meta)
-  POST /trigger?scenario=          -> create a session, start replay + agent analysis
-  GET  /stream/{kind}?session=     -> SSE: kind in {sensors, cv, agent}
-  GET  /report/{session}           -> final report + trace + ML artifacts (detail view)
-
-Data is replayed from committed fixtures (it behaves like a live stream); the agent
-analysis makes real Claude calls. Both are honest demo behaviours.
+  GET  /model/info                 -> feature names, importances, class labels
+  POST /simulate                   -> run the hardcoded batch through the real
+                                      predictive model, return one issue per row
+  GET  /issues                     -> current set of issues
+  POST /issues/{id}/analyze        -> kick off the agent analysis (idempotent
+                                      via run cache), returns a session id
+  GET  /stream/agent?session=      -> SSE stream of agent events for the session
+  GET  /report/{session}           -> final report + workOrder + trace
 """
 
 from __future__ import annotations
@@ -20,11 +21,10 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from sse_starlette.sse import EventSourceResponse
 
-from backend.app import sessions
-from backend.app.fixtures import list_scenarios, load_fixture
-from backend.app.simulator.replay import run_replay
+from backend.app import issues, sessions
+from backend.app.ml.predictor import model_info
 
-app = FastAPI(title="OvenMind", version="0.1.0")
+app = FastAPI(title="OvenMind", version="0.2.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -33,50 +33,60 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-_VALID_STREAMS = {"sensors", "cv", "agent"}
-
 
 @app.get("/health")
 def health() -> dict:
     return {"status": "ok"}
 
 
-@app.get("/scenarios")
-def scenarios() -> dict:
-    return {"scenarios": list_scenarios()}
+@app.get("/model/info")
+def get_model_info() -> dict:
+    return model_info()
 
 
-@app.post("/trigger")
-async def trigger(scenario: str = Query(...)) -> dict:
+@app.post("/simulate")
+def simulate() -> dict:
+    return {"issues": issues.run_simulation()}
+
+
+@app.get("/issues")
+def get_issues() -> dict:
+    return {"issues": issues.all_issues()}
+
+
+@app.post("/issues/{issue_id}/analyze")
+async def analyze_issue(issue_id: str) -> dict:
     try:
-        fixture = load_fixture(scenario)
+        issue = issues.get(issue_id)
     except KeyError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
-
-    session = sessions.create_session(scenario, fixture)
-    asyncio.create_task(run_replay(session))  # drives streams + launches agents
-    return {
-        "session": session.id,
-        "scenario": scenario,
-        "meta": fixture["meta"],
-        "channels": fixture["channels"],
-        "cv_image": fixture["cv"]["image"],
-        "ml": fixture["ml"],
-        "ground_truth": fixture["ground_truth"],
-    }
+    session = sessions.create_session(issue)
+    asyncio.create_task(_run_analysis(session))
+    return {"session": session.id, "issue_id": issue_id}
 
 
-@app.get("/stream/{kind}")
-async def stream(kind: str, session: str = Query(...)) -> EventSourceResponse:
-    if kind not in _VALID_STREAMS:
-        raise HTTPException(status_code=404, detail=f"unknown stream {kind!r}")
+async def _run_analysis(session: sessions.Session) -> None:
+    from backend.app.agents.runner import analyze
+
+    try:
+        await analyze(session)
+        session.status = "done"
+    except Exception as exc:  # never let a bad LLM response kill the stream
+        session.status = "error"
+        session.emit({"type": "error", "message": str(exc)})
+    finally:
+        session.close()
+
+
+@app.get("/stream/agent")
+async def stream_agent(session: str = Query(...)) -> EventSourceResponse:
     try:
         sess = sessions.get_session(session)
     except KeyError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
 
     async def gen():
-        async for event in sessions.stream_events(sess, kind):
+        async for event in sessions.stream_events(sess):
             yield {"data": json.dumps(event, default=str)}
 
     return EventSourceResponse(gen())
@@ -90,7 +100,6 @@ def report(session: str) -> dict:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
     return {
         "session": sess.id,
-        "scenario": sess.scenario,
         "status": sess.status,
         "cached": sess.cached,
         "tokens": sess.tokens,
@@ -98,8 +107,5 @@ def report(session: str) -> dict:
         "report": sess.report,
         "work_order": sess.work_order,
         "trace": sess.trace,
-        "ml": sess.fixture["ml"],
-        "cv_image": sess.fixture["cv"]["image"],
-        "ground_truth": sess.fixture["ground_truth"],
-        "meta": sess.fixture["meta"],
+        "issue": sess.issue,
     }

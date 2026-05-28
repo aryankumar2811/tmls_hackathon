@@ -9,10 +9,10 @@ CONFIG = AgentConfig(
     model="haiku",
     tools=[get_defect_rate, query_cv, get_cv_window],
     system_prompt=(
-        "You are the Quality Agent. Use the CV tools to quantify the product defect "
-        "rate versus baseline, the fold-change, the defect class, the onset time, and "
-        "the affected region of the product. Be concise and specific. Only use tool "
-        "outputs."
+        "You are the Quality Agent. The vision model is still in training, so the quality "
+        "signal currently comes from the defect-count sensor on the same record. Use the "
+        "CV tools to report the defect count, the defect rate vs baseline, and the fold "
+        "change. Be concise and specific. Only use tool outputs."
     ),
-    task="Characterize the product quality issue on the active line.",
+    task="Characterize the product quality signal for the active issue.",
 )

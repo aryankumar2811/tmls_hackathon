@@ -93,8 +93,8 @@ async def _route(state: GState) -> str:
 async def _supervisor_node(state: GState) -> GState:
     nxt = await _route(state)
     s = sessions.current()
-    s.emit("agent", {"type": "supervisor", "next": nxt,
-                     "completed": state.get("completed", []), "t": s.playhead_t})
+    s.emit({"type": "supervisor", "next": nxt,
+                     "completed": state.get("completed", [])})
     return {"next": nxt, "turns": state.get("turns", 0) + 1}
 
 
@@ -122,13 +122,14 @@ async def _finalize_work_order(s: sessions.Session, result: dict) -> None:
     wo = result["tools"].get("create_wo")
     if not (isinstance(wo, dict) and wo.get("wo_id")):
         # agent didn't call create_wo, or called it with bad args — build one ourselves
-        gt = s.fixture["ground_truth"]
-        wo = create_wo(gt["root_cause"], s.fixture["meta"]["severity"])
+        ctx = s.issue.get("context", {})
+        root = ctx.get("ground_truth_description") or "Elevated equipment + quality readings"
+        wo = create_wo(root, s.issue["severity"])
     pdf = generate_pdf(wo)
     slack = post_slack(wo)
     wo = {**wo, "pdf": pdf, "slack": slack}
     s.work_order = wo
-    s.emit("agent", {"type": "work_order", "wo": wo, "t": s.playhead_t})
+    s.emit({"type": "work_order", "wo": wo})
 
 
 def _finalize_report(s: sessions.Session, result: dict, findings: dict) -> None:
@@ -136,11 +137,10 @@ def _finalize_report(s: sessions.Session, result: dict, findings: dict) -> None:
         "markdown": result["summary"],
         "findings": findings,
         "work_order": s.work_order,
-        "scenario": s.scenario,
-        "meta": s.fixture["meta"],
-        "ground_truth": s.fixture["ground_truth"],
+        "issue_id": s.issue.get("id"),
+        "issue": s.issue,
     }
-    s.emit("agent", {"type": "report", "markdown": result["summary"], "t": s.playhead_t})
+    s.emit({"type": "report", "markdown": result["summary"]})
 
 
 def build_graph():

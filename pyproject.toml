@@ -24,9 +24,11 @@ dependencies = [
     "rank-bm25>=0.2",
     "openai>=1.50",        # embeddings (text-embedding-3-small)
     "voyageai>=0.3",       # alt embeddings (voyage-3)
-    # data
+    # data + predictive model
     "numpy>=2.0",
     "pandas>=2.2",
+    "scikit-learn>=1.6",
+    "joblib>=1.4",
     # reports
     "reportlab>=4.2",
     "qrcode>=8.0",

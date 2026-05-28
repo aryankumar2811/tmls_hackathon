@@ -1,8 +1,7 @@
 """RAG tools — query the local Chroma index over the corpus.
 
-Graceful fallback: if the index is missing (Chroma not built / not installed),
-`rag_lookup_incident` returns the active scenario's ground-truth incident so the
-demo never hard-fails.
+Graceful fallback: if the index is missing, `rag_lookup_incident` returns the
+CSV's corrective-action hint from the active issue so the demo never hard-fails.
 """
 
 from __future__ import annotations
@@ -25,12 +24,11 @@ def rag_lookup_incident(symptoms: str) -> dict:
         top = hits[0]
         return {"matched_incident": top.get("doc_id"), "snippet": top["text"],
                 "other_candidates": [h.get("doc_id") for h in hits[1:]], "source": "rag"}
-    # fallback — index unavailable
-    s = sessions.current()
-    gt = s.fixture["ground_truth"]
+    issue = sessions.current().issue
+    ctx = issue.get("context", {})
     return {
-        "matched_incident": gt["matched_incident"],
-        "snippet": gt["root_cause"],
+        "matched_incident": None,
+        "snippet": ctx.get("corrective_action") or ctx.get("error_description") or "",
         "other_candidates": [],
-        "source": "fixture_fallback",
+        "source": "issue_context_fallback",
     }

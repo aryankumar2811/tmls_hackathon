@@ -1,7 +1,4 @@
-"""Work-order tools — assemble the WO, render an optional PDF, post to Slack.
-
-Plain functions; the agent layer wraps them as tools.
-"""
+"""Work-order tools — assemble a WO from the active issue, with optional PDF/Slack."""
 
 from __future__ import annotations
 
@@ -10,47 +7,71 @@ import datetime as dt
 from backend.app import sessions
 from backend.app.config import settings
 
-# small fake roster + parts catalog keyed by equipment (stand-ins for a CMMS)
-_ROSTER = {
-    "Line 1": "J. Okafor (Mech)",
-    "Line 2": "M. Tremblay (Mech)",
-    "Line 3": "R. Singh (Electrical)",
-    "Line 4": "L. Costa (Controls)",
-    "Line 5": "A. Webb (Mech)",
+_TECH_BY_TYPE = {
+    "Conveying": "M. Tremblay (Mech)",
+    "Freezing": "A. Webb (Refrig)",
+    "Decorating": "L. Costa (Robotics)",
+    "Labeling": "R. Singh (Controls)",
+    "Mixing": "J. Okafor (Mech)",
+    "Baking": "R. Singh (Electrical)",
+    "Packaging": "M. Tremblay (Mech)",
+    "Forming": "L. Costa (Robotics)",
+    "Proofing": "L. Costa (Controls)",
+    "CIP": "A. Webb (Sanitation)",
 }
-_PARTS = {
-    "TO-3": ["HE-2400-Z2 (Zone 2 top element)", "TC-2400-Z2 (thermocouple pair)"],
-    "SM-600": ["BRG-600-DE (drive-end bearing)", "food-grade NLGI-2 grease"],
-    "C-Series": ["CG-CS-04 (edge guide)"],
-    "P-12": ["HS-P12-RH (humidity probe)", "SIN-P12 (steam injector nozzle)"],
+_IMPACT_BY_SEVERITY = {
+    "critical": (15_000, 30_000),
+    "medium": (5_000, 15_000),
+    "low": (1_000, 5_000),
 }
+_RUL_BY_SEVERITY = {"critical": 8, "medium": 48, "low": 168}
 
 _seq = {"n": 0}
 
 
+def _suggested_parts(issue: dict) -> list[str]:
+    feats = issue["features"]
+    parts: list[str] = []
+    if (feats.get("Motor_Temp_C") or 0) >= 70:
+        parts.append("Motor (overheat) — inspect/replace per service bulletin")
+    if (feats.get("Vibration_mm_s") or 0) >= 2.5:
+        parts.append("Drive-end bearing (vibration > threshold)")
+    if (feats.get("Hydraulic_Fluid_Temp_C") or 0) >= 65:
+        parts.append("Hydraulic fluid + filter")
+    if (feats.get("Noise_Level_dB") or 0) >= 80:
+        parts.append("Acoustic enclosure / housing inspection")
+    if (feats.get("Defect_Count") or 0) >= 50:
+        parts.append("Recalibrate quality sensor")
+    if not parts:
+        parts.append("General PM kit per OEM manual")
+    return parts
+
+
 def create_wo(root_cause: str, severity: str) -> dict:
-    """Create a work order: parts from the equipment catalog, technician from the
-    roster, ETA, and the predicted dollar impact for this line."""
+    """Assemble a work order from the active issue. Pulls equipment + line +
+    estimated impact from the issue snapshot; suggests parts from anomalous
+    feature readings."""
     s = sessions.current()
-    meta = s.fixture["meta"]
-    gt = s.fixture["ground_truth"]
+    issue = s.issue
+    ctx = issue.get("context", {})
     _seq["n"] += 1
     today = dt.date.today()
     wo_id = f"WO-{today:%Y-%m%d}-{_seq['n']:03d}"
-    lo, hi = gt.get("impact_usd", [0, 0])
-    rul_lo = s.fixture["ml"]["rul_hours"][0]
+    lo, hi = _IMPACT_BY_SEVERITY.get(severity, (3_000, 10_000))
     return {
         "wo_id": wo_id,
-        "equipment_id": meta["equipment_id"],
-        "equipment_name": meta["equipment_name"],
-        "line": meta["line"],
+        "equipment_id": issue["equipment_id"],
+        "equipment_name": issue["machine_name"],
+        "line": issue["line"],
+        "plant": issue["plant"],
         "severity": severity,
         "root_cause": root_cause,
-        "parts": _PARTS.get(meta["equipment_id"], ["see equipment manual"]),
-        "technician": _ROSTER.get(meta["line"], "Unassigned"),
-        "eta_hours": rul_lo,
+        "parts": _suggested_parts(issue),
+        "technician": _TECH_BY_TYPE.get(issue.get("machine_type"), "Unassigned"),
+        "eta_hours": _RUL_BY_SEVERITY.get(severity, 24),
         "estimated_impact_usd": [lo, hi],
-        "matched_incident": gt.get("matched_incident"),
+        "error_code": ctx.get("error_code"),
+        "suggested_action_csv": ctx.get("corrective_action"),
         "created": today.isoformat(),
     }
 

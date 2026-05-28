@@ -1,11 +1,8 @@
-"""In-memory session store + per-session SSE fan-out.
+"""In-memory session store + agent-stream fan-out.
 
-A *session* is one triggered scenario run. It owns three asyncio queues (sensors,
-cv, agent) that the SSE endpoints drain, a playhead the agent tools read against,
-and the captured agent trace + final report used by GET /report.
-
-Single event loop, no threads — every producer (replay loop, agent nodes) and
-consumer (SSE generators) runs in the same loop, so asyncio.Queue is safe.
+A session is one agent analysis run for one issue. It owns the issue snapshot
+the tools read against, an asyncio queue the SSE endpoint drains, and the
+captured trace + final report.
 """
 
 from __future__ import annotations
@@ -16,52 +13,35 @@ import uuid
 from dataclasses import dataclass, field
 from typing import Any
 
-Stream = str  # "sensors" | "cv" | "agent"
-_STREAMS: tuple[Stream, ...] = ("sensors", "cv", "agent")
-
 
 @dataclass
 class Session:
-    scenario: str
-    fixture: dict
+    issue: dict
     id: str = field(default_factory=lambda: uuid.uuid4().hex[:12])
-    playhead_t: float = 0.0
-    status: str = "running"          # running | analyzing | done | error
+    status: str = "running"          # running | done | error
     cached: bool = False
-    queues: dict[Stream, asyncio.Queue] = field(default_factory=dict)
+    queue: asyncio.Queue = field(default_factory=asyncio.Queue)
     trace: list[dict] = field(default_factory=list)   # captured agent events
     report: dict | None = None
     work_order: dict | None = None
     tokens: int = 0
     cost_usd: float = 0.0
 
-    def __post_init__(self) -> None:
-        self.queues = {s: asyncio.Queue() for s in _STREAMS}
-
     # ── producers ─────────────────────────────────────────────────────────
-    def emit(self, stream: Stream, payload: dict) -> None:
-        """Push an event to a stream (and record agent events for /report)."""
-        if stream == "agent":
-            self.trace.append(payload)
-        self.queues[stream].put_nowait(payload)
+    def emit(self, payload: dict) -> None:
+        """Push an agent event onto the SSE queue and record it in the trace."""
+        self.trace.append(payload)
+        self.queue.put_nowait(payload)
 
-    def close_stream(self, stream: Stream) -> None:
-        self.queues[stream].put_nowait({"type": "end"})
-
-    # ── tool-facing views over the replayed window ────────────────────────
-    def sensor_window(self) -> list[dict]:
-        """Sensor frames up to the current playhead."""
-        return [f for f in self.fixture["sensors"]["frames"] if f["t"] <= self.playhead_t]
-
-    def cv_window(self) -> list[dict]:
-        return [f for f in self.fixture["cv"]["frames"] if f["t"] <= self.playhead_t]
+    def close(self) -> None:
+        self.queue.put_nowait({"type": "end"})
 
 
 _SESSIONS: dict[str, Session] = {}
 
 
-def create_session(scenario: str, fixture: dict) -> Session:
-    s = Session(scenario=scenario, fixture=fixture)
+def create_session(issue: dict) -> Session:
+    s = Session(issue=issue)
     _SESSIONS[s.id] = s
     return s
 
@@ -72,11 +52,10 @@ def get_session(session_id: str) -> Session:
     return _SESSIONS[session_id]
 
 
-async def stream_events(session: Session, stream: Stream):
-    """Async generator yielding SSE-ready dicts until an {'end'} sentinel."""
-    q = session.queues[stream]
+async def stream_events(session: Session):
+    """Async generator yielding events from the agent queue until {'end'}."""
     while True:
-        item: dict[str, Any] = await q.get()
+        item: dict[str, Any] = await session.queue.get()
         yield item
         if item.get("type") == "end":
             return

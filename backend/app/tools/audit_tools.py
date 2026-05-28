@@ -12,6 +12,5 @@ from backend.app import sessions
 def log_action(agent: str, reasoning: str) -> dict:
     """Append a reasoning note to the audit trail (shown in 'Show reasoning')."""
     s = sessions.current()
-    s.emit("agent", {"type": "note", "agent": agent, "reasoning": reasoning,
-                     "t": s.playhead_t})
+    s.emit({"type": "note", "agent": agent, "reasoning": reasoning})
     return {"logged": True}

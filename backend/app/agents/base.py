@@ -82,8 +82,8 @@ async def run_agent(cfg: AgentConfig, context: str = "") -> dict:
     s = sessions.current()
     llm, funcs = _make_llm(cfg.model, cfg.tools)
 
-    s.emit("agent", {"type": "agent_start", "agent": cfg.name, "role": cfg.role,
-                     "model": _model_id(cfg.model), "t": s.playhead_t})
+    s.emit({"type": "agent_start", "agent": cfg.name, "role": cfg.role,
+                     "model": _model_id(cfg.model)})
 
     msgs = [SystemMessage(content=cfg.system_prompt),
             HumanMessage(content=f"{cfg.task}\n\n{context}".strip())]
@@ -102,22 +102,22 @@ async def run_agent(cfg: AgentConfig, context: str = "") -> dict:
             break
         for tc in tool_calls:
             name, args = tc["name"], tc.get("args", {})
-            s.emit("agent", {"type": "tool_call", "agent": cfg.name,
-                             "tool": name, "args": args, "t": s.playhead_t})
+            s.emit({"type": "tool_call", "agent": cfg.name,
+                             "tool": name, "args": args})
             try:
                 result = funcs[name](**args)
             except Exception as exc:  # surface the error to the model, keep going
                 result = {"error": str(exc)}
             tool_results[name] = result
-            s.emit("agent", {"type": "tool_result", "agent": cfg.name,
-                             "tool": name, "result": result, "t": s.playhead_t})
+            s.emit({"type": "tool_result", "agent": cfg.name,
+                             "tool": name, "result": result})
             msgs.append(ToolMessage(content=json.dumps(result, default=str),
                                     tool_call_id=tc["id"]))
 
     summary = _text(resp.content) if resp is not None else ""
     s.tokens += tokens
     s.cost_usd += cost
-    s.emit("agent", {"type": "agent_done", "agent": cfg.name, "summary": summary,
-                     "tokens": tokens, "cost": round(cost, 4), "t": s.playhead_t})
+    s.emit({"type": "agent_done", "agent": cfg.name, "summary": summary,
+                     "tokens": tokens, "cost": round(cost, 4)})
     return {"agent": cfg.name, "summary": summary, "tools": tool_results,
             "tokens": tokens, "cost": cost}

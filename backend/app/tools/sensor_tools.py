@@ -1,77 +1,96 @@
-"""Sensor tools — read the replayed window of the active session.
+"""Sensor tools — read the current issue's feature snapshot.
 
-Plain functions (no langchain dependency); the agent layer wraps them as tools.
-Every call returns real values computed from the committed fixture frames.
+Each tool returns plain JSON-friendly dicts. The active issue is read from the
+session contextvar set by the agent runner.
 """
 
 from __future__ import annotations
 
 from backend.app import sessions
+from backend.app.ml.predictor import (
+    ANOMALY_THRESHOLD,
+    BASELINES,
+    NUMERIC_FEATURES,
+    UNITS,
+)
+
+_CATEGORIES: dict[str, list[str]] = {
+    "operating": ["Operating_Hours", "Days_Since_Maintenance", "Year_Installed", "RPM",
+                  "Conveyor_Speed_m_min"],
+    "thermal": ["Motor_Temp_C", "Ambient_Temp_C", "Hydraulic_Fluid_Temp_C"],
+    "mechanical": ["Vibration_mm_s", "Power_Draw_kW", "Pressure_PSI"],
+    "acoustic": ["Noise_Level_dB"],
+    "quality": ["Defect_Count", "Defect_Rate_Pct"],
+}
 
 
-def _channels() -> dict[str, dict]:
-    s = sessions.current()
-    return {c["key"]: c for c in s.fixture["channels"]}
+def _features() -> dict:
+    return sessions.current().issue["features"]
 
 
-def query_sensor(channel: str) -> dict:
-    """Latest value (at the current playhead) for one sensor channel."""
-    s = sessions.current()
-    window = s.sensor_window()
-    if not window:
-        return {"channel": channel, "value": None, "note": "no data yet"}
-    meta = _channels().get(channel, {})
+def _summarize(name: str, value) -> dict:
+    base = BASELINES.get(name)
+    thresh = ANOMALY_THRESHOLD.get(name)
+    deviation_pct = None
+    if base and isinstance(value, (int, float)) and base != 0:
+        deviation_pct = round(((value - base) / base) * 100, 1)
+    anomalous = (thresh is not None and isinstance(value, (int, float)) and value >= thresh)
     return {
-        "channel": channel,
-        "label": meta.get("label", channel),
-        "unit": meta.get("unit", ""),
-        "value": window[-1]["values"].get(channel),
-        "t": window[-1]["t"],
+        "feature": name,
+        "value": value,
+        "unit": UNITS.get(name, ""),
+        "baseline": base,
+        "pct_vs_baseline": deviation_pct,
+        "anomalous": anomalous,
     }
 
 
-def get_sensor_window() -> dict:
-    """Per-channel summary over the replayed window: baseline, current, % change,
-    and trend — enough for the agent to judge which channels are anomalous."""
-    s = sessions.current()
-    window = s.sensor_window()
-    chans = _channels()
-    if len(window) < 2:
-        return {"channels": [], "note": "insufficient data"}
+def query_sensor(feature: str) -> dict:
+    """Look up a single feature on the current issue snapshot (value, unit,
+    baseline, % vs baseline, anomalous flag)."""
+    feats = _features()
+    if feature not in feats:
+        return {"feature": feature, "error": "unknown feature",
+                "available": list(feats.keys())}
+    return _summarize(feature, feats[feature])
 
-    out = []
-    head = window[: max(2, len(window) // 4)]  # early baseline portion
-    for key, meta in chans.items():
-        baseline = sum(f["values"][key] for f in head) / len(head)
-        current = window[-1]["values"][key]
-        pct = ((current - baseline) / baseline * 100) if baseline else 0.0
-        out.append(
-            {
-                "channel": key,
-                "label": meta["label"],
-                "unit": meta["unit"],
-                "baseline": round(baseline, 3),
-                "current": round(current, 3),
-                "pct_change": round(pct, 1),
-                "trend": "rising" if pct > 3 else "falling" if pct < -3 else "stable",
-            }
-        )
-    out.sort(key=lambda c: abs(c["pct_change"]), reverse=True)
-    return {"window_s": [window[0]["t"], window[-1]["t"]], "channels": out}
+
+def get_sensor_window() -> dict:
+    """Categorized snapshot of every numeric feature on the active issue, with
+    anomaly flags and the sensor-status string. (One reading — not a window —
+    because the predictive model operates on a single record.)"""
+    feats = _features()
+    by_cat: dict[str, list[dict]] = {}
+    for cat, names in _CATEGORIES.items():
+        by_cat[cat] = [_summarize(n, feats.get(n)) for n in names]
+    anomalous = [n for n in NUMERIC_FEATURES
+                 if (t := ANOMALY_THRESHOLD.get(n)) is not None
+                 and isinstance(feats.get(n), (int, float)) and feats[n] >= t]
+    return {
+        "sensor_status": feats.get("Sensor_Status"),
+        "categories": by_cat,
+        "anomalous_features": anomalous,
+    }
 
 
 def get_rul() -> dict:
-    """Predictive-model remaining-useful-life estimate and current failure
-    probability for the equipment on this line (from the predictive model output)."""
-    s = sessions.current()
-    ml = s.fixture["ml"]
-    fp = ml["failure_probability"]
-    current_p = next((f["p"] for f in reversed(fp) if f["t"] <= s.playhead_t), fp[0]["p"])
-    lo, hi = ml["rul_hours"]
+    """Estimate remaining useful life from the predictive model's class
+    probabilities. P(critical) high -> short window; P(low) high -> long."""
+    issue = sessions.current().issue
+    p = issue["prediction"]["probabilities"]  # [P1, P2, P3]
+    p_low, p_med, p_crit = p[0], p[1], p[2]
+    # weighted blend of representative hour windows
+    if p_crit > 0.5:
+        lo, hi = 4, 24
+    elif p_med > 0.5:
+        lo, hi = 24, 168
+    else:
+        lo, hi = 168, 720
     return {
-        "equipment_id": s.fixture["meta"]["equipment_id"],
+        "equipment_id": issue["equipment_id"],
         "rul_hours_low": lo,
         "rul_hours_high": hi,
-        "failure_probability": round(current_p, 3),
-        "top_features": ml["feature_contributions"],
+        "predicted_class": issue["prediction"]["class"],
+        "class_name": issue["prediction"]["class_name"],
+        "probabilities": {"low": p_low, "medium": p_med, "critical": p_crit},
     }

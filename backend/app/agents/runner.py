@@ -15,8 +15,9 @@ from backend.app.config import settings
 
 async def analyze(session: sessions.Session) -> None:
     sessions.set_current(session)
+    issue_id = session.issue["id"]
 
-    cached = runcache.load(session.scenario) if settings.use_run_cache else None
+    cached = runcache.load(issue_id) if settings.use_run_cache else None
     if cached:
         await _replay_cached(session, cached)
         return
@@ -32,7 +33,7 @@ async def analyze(session: sessions.Session) -> None:
     # persist for next time
     if settings.use_run_cache:
         runcache.save(
-            session.scenario,
+            issue_id,
             {
                 "events": session.trace,
                 "report": session.report,
@@ -54,5 +55,5 @@ async def _replay_cached(session: sessions.Session, cached: dict) -> None:
     delays = {"tool_call": 0.25, "tool_result": 0.25, "agent_start": 0.5,
               "agent_done": 0.5, "supervisor": 0.4, "work_order": 0.4, "report": 0.3}
     for ev in cached.get("events", []):
-        session.emit("agent", {**ev, "cached": True})
+        session.emit({**ev, "cached": True})
         await asyncio.sleep(delays.get(ev.get("type"), 0.2))
