@@ -209,8 +209,8 @@ Next.js 15 App Router with everything under `frontend/`.
 
 - **Type system**: `frontend/lib/types.ts` mirrors the FastAPI payloads
   (`Issue`, `Prediction`, `WorkOrder`, `AgentEvent`, `ModelInfo`, …).
-- **REST client**: `frontend/lib/api.ts` (`runSimulation`, `analyzeIssue`,
-  `getReport`, `getModelInfo`).
+- **REST client**: `frontend/lib/api.ts` (`runSimulation`, `getIssues`,
+  `analyzeIssue`, `getModelInfo`).
 - **SSE**: `frontend/lib/sse.ts` — one helper, single per-session agent stream.
 - **State**: `frontend/components/Dashboard.tsx` holds an `issues: Record<id,
   IssueState>` map and a per-session SSE closer. Agent analysis only kicks off
@@ -226,7 +226,7 @@ Key components:
 | `AgentWorkflow` | Static (post-stream) trace; tool args/results collapsed by default; each agent's final summary is rendered as markdown |
 | `ClassProbabilityBar` | Horizontal stacked bar of `[P(low), P(medium), P(critical)]` with the predicted class highlighted |
 | `FeatureValuesTable` | 14 numeric features × (current value, baseline, importance bar); anomalous values flagged |
-| `VisionPlaceholder` | Stand-in for the vision model (see §8) |
+| `VisionSimulation` | Deterministic seeded simulation of YOLOv11 detections (stand-in for §8) |
 
 Theme: IBM Plex Sans + IBM Plex Mono, restrained dark palette with severity-only
 accent colors. No emoji, no decorative motion, one functional spinner where

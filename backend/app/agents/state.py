@@ -1,6 +1,7 @@
-"""Shared LangGraph state passed between the supervisor and sub-agents.
+"""Originally intended as the shared LangGraph state type.
 
-TODO (Tue): refine fields as the graph takes shape.
+The graph (graph.py) ended up using a local GState TypedDict directly.
+OvenMindState is preserved here for reference but is not imported anywhere.
 """
 
 from typing import Annotated, TypedDict

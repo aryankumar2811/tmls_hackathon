@@ -21,12 +21,12 @@ Built for the **TMLS Hackathon, May 25–29 2026**. Target customer: **FGF Brand
 | Synthetic defects | Stable Diffusion + ControlNet |
 | Predictive-maint data | UCI AI4I 2020 + custom `numpy` drift simulator |
 | Vector DB / RAG | Chroma (local, in-process) + hybrid BM25 + semantic retrieval |
-| Embeddings | OpenAI `text-embedding-3-small` or Voyage `voyage-3` |
+| Embeddings | Chroma default on-device MiniLM (no API key required) |
 | Backend | FastAPI + SSE |
-| Frontend | Next.js 15 + Tailwind + shadcn/ui + Apache ECharts |
+| Frontend | Next.js 15 + Tailwind + lucide-react + react-markdown |
 | PDF work orders | ReportLab |
 | Alerts | Slack incoming webhook |
-| Deployment | Modal (backend + GPU) + Vercel (frontend) |
+| Deployment | Railway (backend) + Vercel (frontend) |
 
 See [docs/architecture.md](docs/architecture.md) for the agent graph and [docs/demo-script.md](docs/demo-script.md) for the 90-second script.
 
@@ -38,7 +38,6 @@ See [docs/architecture.md](docs/architecture.md) for the agent graph and [docs/d
 make install                # uv sync + npm install (Python 3.12 + Node 20)
 cp .env.example .env        # set ANTHROPIC_API_KEY (only key required)
 
-make fixtures               # (re)generate the 4 scenario datasets (already committed)
 make ingest                 # build the local Chroma RAG index from corpus/ (no API key)
 
 make backend                # FastAPI + SSE on :8000

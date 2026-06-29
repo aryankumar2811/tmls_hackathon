@@ -56,7 +56,7 @@ def create_wo(root_cause: str, severity: str) -> dict:
     ctx = issue.get("context", {})
     _seq["n"] += 1
     today = dt.date.today()
-    wo_id = f"WO-{today:%Y-%m%d}-{_seq['n']:03d}"
+    wo_id = f"WO-{today:%Y-%m-%d}-{_seq['n']:03d}"
     lo, hi = _IMPACT_BY_SEVERITY.get(severity, (3_000, 10_000))
     return {
         "wo_id": wo_id,

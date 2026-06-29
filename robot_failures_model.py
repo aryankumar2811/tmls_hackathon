@@ -7,7 +7,7 @@ import joblib as jb
 pd.set_option("display.max_columns", None)
 
 # read in data
-dataset = pd.read_csv("/Users/hassaantariq/Documents/computer_science_work/tmls_hackathon/food_robotics_machinery_data.csv")
+dataset = pd.read_csv("food_robotics_machinery_data.csv")
 
 # eda
 print(dataset.shape)
