@@ -83,16 +83,19 @@ key is needed. Slack and PDF are optional and degrade gracefully.
 5. **The dashboard renders the table.** Each issue shows its equipment, line,
    plant, machine type, severity (`low`/`medium`/`critical`), and a status
    badge (`Pending` until you open it).
-6. **Open an issue.** The slide-over shows the Overview tab immediately —
-   populated from the issue + the model output, no LLM call yet.
-7. **Switch to "Agent report".** The frontend fires `POST
-   /api/issues/{id}/analyze`. The backend creates a session bound to that
-   issue, launches the LangGraph run in a background task, and opens
-   `GET /api/stream/agent?session=…` to stream events back.
-8. **Agents stream live.** Each agent's start, tool calls, results, and final
-   markdown summary push as events; the UI shows running/done chips and the
-   reasoning trace fills in. When the Reporting Agent emits its `report` event,
-   the markdown swaps into the main report area.
+6. **Analysis fires immediately.** After the 6 issues are stored, the frontend
+   fires `POST /api/issues/{id}/analyze` for **all six** at once. The backend
+   creates a session per issue and launches each LangGraph run as a background
+   `asyncio` task. All six agent pipelines run concurrently.
+7. **Agents stream live.** Each agent's start, tool calls, results, and final
+   markdown summary push as SSE events on each issue's session stream. The issue
+   row's status badge flips `Analysing → Diagnosed` in real time as each
+   pipeline completes.
+8. **Open an issue.** The slide-over shows the Overview tab immediately —
+   populated from the issue + model output. Switching to the "Agent report"
+   tab shows the live (or completed) agent trace and the final markdown report.
+   Because analysis has already been running since step 6, the report is usually
+   ready by the time you open it.
 9. **Run cache.** The full trace is persisted to `.run_cache/<issue_id>.json`
    on first run. Later opens replay from cache (instant + free).
 
@@ -213,8 +216,11 @@ Next.js 15 App Router with everything under `frontend/`.
   `analyzeIssue`, `getModelInfo`).
 - **SSE**: `frontend/lib/sse.ts` — one helper, single per-session agent stream.
 - **State**: `frontend/components/Dashboard.tsx` holds an `issues: Record<id,
-  IssueState>` map and a per-session SSE closer. Agent analysis only kicks off
-  when you open an issue's *Agent report* tab (on demand, idempotent via cache).
+  IssueState>` map and a per-session SSE closer. When "Run simulation" is
+  clicked, analysis fires for **all six issues at once** — not on-demand per
+  issue. Opening an issue's slide-over just shows the already-running or
+  completed trace. The `analyzed` ref set makes this idempotent (each issue
+  analyzed at most once per session).
 
 Key components:
 

@@ -11,7 +11,13 @@ export function subscribeAgentStream(
   const es = new EventSource(`${API_BASE}/stream/agent?session=${encodeURIComponent(session)}`);
   es.onmessage = (msg) => {
     try {
-      onEvent(JSON.parse(msg.data) as AgentEvent);
+      const event = JSON.parse(msg.data) as AgentEvent;
+      // "end" is a sentinel — close before the browser auto-reconnects
+      if ((event as { type: string }).type === "end") {
+        es.close();
+        return;
+      }
+      onEvent(event);
     } catch {
       /* ignore malformed frames */
     }
