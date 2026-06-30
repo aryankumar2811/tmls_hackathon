@@ -27,6 +27,13 @@ def load(scenario: str) -> dict | None:
         return None
 
 
+def clear_all() -> None:
+    """Delete every cached run file. Called at the start of each new simulation."""
+    if CACHE_DIR.exists():
+        for p in CACHE_DIR.glob("*.json"):
+            p.unlink()
+
+
 def save(scenario: str, data: dict) -> None:
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     _path(scenario).write_text(json.dumps(data, indent=2, default=str))

@@ -33,3 +33,8 @@ out/
 # OS / editor
 .DS_Store
 *.log
+
+# Local learning notes
+LEARNING/
+
+.claude/

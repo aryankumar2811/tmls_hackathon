@@ -48,6 +48,11 @@ class Session:
 _SESSIONS: dict[str, Session] = {}
 
 
+def clear_all() -> None:
+    """Evict all sessions from the in-memory store. Called on each new simulation."""
+    _SESSIONS.clear()
+
+
 def create_session(issue: dict) -> Session:
     s = Session(issue=issue)
     _SESSIONS[s.id] = s

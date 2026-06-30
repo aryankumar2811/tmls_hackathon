@@ -120,12 +120,11 @@ export default function IncidentDetail({
               <span>{issue.machine_type}</span>
               <span>·</span>
               <span>detected {relTime(issue.detectedAt)}</span>
-              {(issue.tokens > 0 || issue.cached) && (
+              {issue.tokens > 0 && (
                 <>
                   <span>·</span>
                   <span>
-                    {issue.cached ? "cached" : "live"} · {issue.tokens} tok · $
-                    {issue.cost.toFixed(4)}
+                    {issue.tokens} tok · ${issue.cost.toFixed(4)}
                   </span>
                 </>
               )}

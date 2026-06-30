@@ -21,7 +21,7 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from sse_starlette.sse import EventSourceResponse
 
-from backend.app import issues, sessions
+from backend.app import issues, runcache, sessions
 from backend.app.ml.predictor import model_info
 
 app = FastAPI(title="OvenMind", version="0.2.0")
@@ -49,6 +49,8 @@ def get_model_info() -> dict:
 
 @app.post("/simulate")
 def simulate() -> dict:
+    runcache.clear_all()
+    sessions.clear_all()
     return {"issues": issues.run_simulation()}
 
 
