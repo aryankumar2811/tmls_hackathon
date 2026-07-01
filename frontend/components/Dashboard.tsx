@@ -51,6 +51,7 @@ export default function Dashboard() {
       patch(id, (i) => ({ ...i, session }));
       closers.current[id] = subscribeAgentStream(session, (ev: AgentEvent) => {
         patch(id, (i) => {
+          if (i.analysisStatus === "diagnosed" || i.analysisStatus === "error") return i;
           const next: IssueState = { ...i, agentEvents: [...i.agentEvents, ev] };
           if (ev.cached) next.cached = true;
           if (typeof ev.tokens === "number") next.tokens = i.tokens + ev.tokens;
@@ -59,8 +60,12 @@ export default function Dashboard() {
           if (ev.type === "report") {
             next.report = ev.markdown;
             next.analysisStatus = "diagnosed";
+            closers.current[id]?.();
           }
-          if (ev.type === "error") next.analysisStatus = "error";
+          if (ev.type === "error") {
+            next.analysisStatus = "error";
+            closers.current[id]?.();
+          }
           return next;
         });
       });
