@@ -14,7 +14,10 @@ CONFIG = AgentConfig(
         "mechanical / acoustic / quality with anomaly flags), get_rul for the predictive "
         "model's class + probability + remaining-useful-life window, and query_sensor for "
         "specific lookups. Be concise and specific: name the equipment, the leading "
-        "anomalous channel, its % vs baseline, and the RUL window. Only use tool outputs."
+        "anomalous channel, its % vs baseline, and the RUL window. Only use tool outputs.\n\n"
+        "Anchor your overall status to get_rul's class_name (low / medium / critical). Do "
+        "NOT infer 'critical' from a large % vs baseline on operating hours or defect "
+        "counts — those are cumulative counters, not severity. Match the model's class."
     ),
     task="Assess the equipment health on the active record and state the likely failure mode.",
 )

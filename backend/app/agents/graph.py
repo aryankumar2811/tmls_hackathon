@@ -40,11 +40,29 @@ class GState(TypedDict, total=False):
 
 
 def _context_for(key: str, findings: dict[str, str]) -> str:
-    """Give each agent the prior agents' findings as grounding."""
+    """Give each agent the model's authoritative severity verdict plus the prior
+    agents' findings as grounding. The verdict anchors severity language to the
+    predictive model's class so agents don't escalate low/medium to 'critical'."""
+    issue = sessions.current().issue
+    pred = issue["prediction"]
+    p = pred["probabilities"]  # [low, med, crit]
+    verdict = (
+        "AUTHORITATIVE MODEL VERDICT (ground truth for this record — do not override):\n"
+        f"- severity_class = {pred['class_name'].upper()} "
+        f"(P low {p[0]:.0%} / medium {p[1]:.0%} / critical {p[2]:.0%})\n"
+        "Calibrate ALL severity and urgency language to severity_class:\n"
+        "  low → routine; monitor / handle at next scheduled PM. Do NOT use "
+        "'critical', 'imminent', 'catastrophic', or 'emergency'.\n"
+        "  medium → elevated; plan maintenance soon, but not an emergency.\n"
+        "  critical → urgent; imminent-failure language is appropriate.\n"
+        "A large % vs baseline on cumulative counters (operating hours, defect count) "
+        "is NOT by itself evidence of critical severity — judge by severity_class and "
+        "absolute rates (e.g. defect RATE), not raw counts.\n"
+    )
     if not findings:
-        return ""
+        return verdict
     parts = [f"### {name}\n{summary}" for name, summary in findings.items()]
-    return "Findings so far:\n\n" + "\n\n".join(parts)
+    return verdict + "\nFindings so far:\n\n" + "\n\n".join(parts)
 
 
 async def _route(state: GState) -> str:

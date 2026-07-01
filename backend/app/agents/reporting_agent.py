@@ -17,7 +17,12 @@ CONFIG = AgentConfig(
         "**What the data shows** (equipment + quality findings as bullets with numbers), "
         "**Root cause** (the correlation conclusion + matched incident), **Recommended "
         "action** (the work order: parts, technician, ETA, dollar impact). Keep it under "
-        "250 words. Do not invent facts beyond the provided findings."
+        "250 words. Do not invent facts beyond the provided findings.\n\n"
+        "Severity discipline: set the report Status/severity to EXACTLY the model's "
+        "severity_class from the AUTHORITATIVE MODEL VERDICT. Never escalate above it. "
+        "Reserve the words 'critical', 'imminent', 'catastrophic', and 'emergency' for the "
+        "critical class ONLY. For low, use measured language (monitor / handle at next PM); "
+        "for medium, plan maintenance soon — not an emergency."
     ),
     task="Write the incident report from the findings below.",
 )
