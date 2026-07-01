@@ -89,6 +89,7 @@ export interface AgentEvent {
   cost?: number;
   message?: string;
   cached?: boolean;
+  seq?: number;   // monotonic per-session id; used to dedupe SSE replays
 }
 
 export interface ModelInfo {

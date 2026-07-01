@@ -30,10 +30,18 @@ class Session:
     work_order: dict | None = None
     tokens: int = 0
     cost_usd: float = 0.0
+    _seq: int = 0
 
     # ── producers ─────────────────────────────────────────────────────────
     def emit(self, payload: dict) -> None:
-        """Push an agent event to the trace AND every live consumer."""
+        """Push an agent event to the trace AND every live consumer.
+
+        Each event gets a monotonic `seq` so a consumer that reconnects and
+        receives the full trace again can dedupe replays instead of double-
+        counting them.
+        """
+        payload = {**payload, "seq": self._seq}
+        self._seq += 1
         self.trace.append(payload)
         for q in self.consumers:
             q.put_nowait(payload)

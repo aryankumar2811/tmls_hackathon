@@ -51,11 +51,27 @@ export default function Dashboard() {
       patch(id, (i) => ({ ...i, session }));
       closers.current[id] = subscribeAgentStream(session, (ev: AgentEvent) => {
         patch(id, (i) => {
-          if (i.analysisStatus === "diagnosed" || i.analysisStatus === "error") return i;
-          const next: IssueState = { ...i, agentEvents: [...i.agentEvents, ev] };
+          // Idempotent: an EventSource reconnect replays the whole trace, so
+          // ignore any event we've already applied (keyed by its seq).
+          if (
+            typeof ev.seq === "number" &&
+            i.agentEvents.some((e) => e.seq === ev.seq)
+          ) {
+            return i;
+          }
+          const agentEvents = [...i.agentEvents, ev];
+          const next: IssueState = { ...i, agentEvents };
           if (ev.cached) next.cached = true;
-          if (typeof ev.tokens === "number") next.tokens = i.tokens + ev.tokens;
-          if (typeof ev.cost === "number") next.cost = i.cost + ev.cost;
+          // Derive totals from the deduped set — never a running +=, so a
+          // replayed agent_done can't inflate the counter.
+          next.tokens = agentEvents.reduce(
+            (s, e) => s + (typeof e.tokens === "number" ? e.tokens : 0),
+            0,
+          );
+          next.cost = agentEvents.reduce(
+            (s, e) => s + (typeof e.cost === "number" ? e.cost : 0),
+            0,
+          );
           if (ev.type === "work_order" && ev.wo) next.workOrder = ev.wo;
           if (ev.type === "report") {
             next.report = ev.markdown;
