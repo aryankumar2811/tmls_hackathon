@@ -22,6 +22,9 @@ export function subscribeAgentStream(
       /* ignore malformed frames */
     }
   };
-  if (onError) es.onerror = onError;
+  es.onerror = (e) => {
+    es.close();
+    onError?.(e);
+  };
   return () => es.close();
 }
