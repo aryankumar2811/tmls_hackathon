@@ -36,7 +36,9 @@ class Settings(BaseSettings):
 
     # Demo replay
     replay_speed: float = 3.0   # 1.0 = real-time; 3.0 compresses 60s -> ~20s
-    use_run_cache: bool = True  # cache the first real agent run per scenario
+    use_run_cache: bool = False  # cache disabled: it replayed a multi-cycle trace
+                                 # (the looping-report bug). Every run is now a
+                                 # fresh single-pass graph run.
 
 
 settings = Settings()

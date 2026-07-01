@@ -51,6 +51,13 @@ export default function Dashboard() {
       patch(id, (i) => ({ ...i, session }));
       closers.current[id] = subscribeAgentStream(session, (ev: AgentEvent) => {
         patch(id, (i) => {
+          // Once the run has produced its report (or errored) the analysis is
+          // over. Any later events are a replayed/looped cycle (the run-cache
+          // can replay a multi-cycle trace, each event with a fresh seq) —
+          // drop them so the trace and token counter can't keep growing.
+          if (i.analysisStatus === "diagnosed" || i.analysisStatus === "error") {
+            return i;
+          }
           // Idempotent: an EventSource reconnect replays the whole trace, so
           // ignore any event we've already applied (keyed by its seq).
           if (

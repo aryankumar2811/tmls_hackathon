@@ -25,12 +25,19 @@ interface Step {
 
 function buildSteps(events: AgentEvent[]): Step[] {
   const steps: Step[] = [];
+  const seen = new Set<string>();
   let cur: Step | null = null;
   for (const e of events) {
     switch (e.type) {
-      case "agent_start":
+      case "agent_start": {
+        const name = e.agent ?? "Agent";
+        // A repeated agent_start means the trace has looped back to the start
+        // of a new cycle (a replayed run-cache trace). Stop here so each agent
+        // renders exactly once.
+        if (seen.has(name)) return steps;
+        seen.add(name);
         cur = {
-          agent: e.agent ?? "Agent",
+          agent: name,
           role: e.role,
           model: e.model,
           status: "running",
@@ -38,6 +45,7 @@ function buildSteps(events: AgentEvent[]): Step[] {
         };
         steps.push(cur);
         break;
+      }
       case "tool_call":
         if (cur) cur.tools.push({ tool: e.tool ?? "", args: e.args });
         break;
